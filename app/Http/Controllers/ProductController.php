@@ -12,7 +12,7 @@ class ProductController extends Controller
     // This method will show products page
     public function index()
     {
-        $products = Product::orderBy('created_at', 'DESC')->get();
+        $products = Product::orderBy('created_at', 'DESC')->paginate(3);
 
         return view('products.list', [
             'products' => $products
@@ -44,14 +44,29 @@ class ProductController extends Controller
         //}
 
         $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'sku' => 'required',
+            'price' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'image2' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+        ], [
+            'name.required' => 'Silahkan Masukkan Nama Produk',
+            'sku.required' => 'Silahkan Masukkan SKU Produk',
+            'price.required' => 'Silahkan Masukkan Harga Produk',
+            'image.required' => 'Silahkan Upload Bukti Bayar Formulir Pendaftaran',
+            'image.image' => 'Silahkan Upload File Gambar Bukti Bayar Formulir Pendaftaran',
+            'image.mimes' => 'Silahkan Upload type jpeg, png, jpg, pdf',
+            'image.max' => 'File terlalu besar atau kecil, silahkan upload file dengan ukuran maksimal 1MB',
+            'image2.required' => 'Silahkan Upload Bukti Bayar Formulir Pendaftaran',
+            'image2.image' => 'Silahkan Upload File Gambar Bukti Bayar Formulir Pendaftaran',
+            'image2.mimes' => 'Please upload an image of type jpeg, png, jpg, gif, svg',
+            'image2.max' => 'File terlalu besar atau kecil, silahkan upload file dengan ukuran maksimal 1MB',
         ]);
+
 
         if ($validator->fails()) {
             return redirect()->route('products.create')->withInput()->withErrors($validator);
         }
-
 
         // here we will insert product in db
         $product = new Product();

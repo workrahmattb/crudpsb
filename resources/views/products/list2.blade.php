@@ -9,6 +9,7 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
     <!-- Navbar -->
+
     <header class="bg-white shadow-md">
       <div class="container mx-auto flex items-center justify-between py-4 px-6">
         <a href="#" class="text-2xl font-bold text-green-600">MyBrand</a>
@@ -45,9 +46,9 @@
                 </div>
                 </div>
             </nav>
-  
+
       </div>
     </header>
-    
+
 </body>
 </html>
