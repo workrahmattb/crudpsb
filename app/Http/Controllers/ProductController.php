@@ -80,10 +80,10 @@ class ProductController extends Controller
             // here we will store image
             $image = $request->image;
             $ext = $image->getClientOriginalExtension();
-            $imageName = time() . '.' . $ext; // Unique image name
+            $imageName = uniqid() . '_' . time() . '.' . $ext; // Unique image name
 
             // Save image to products directory
-            $image->move(public_path('uploads/products'), $imageName);
+            $image->move(public_path('storage/'), $imageName);
 
             // Save image name in database
             $product->image = $imageName;
@@ -94,11 +94,11 @@ class ProductController extends Controller
         if ($request->image2 != "") {
             // here we will store image
             $image2 = $request->image2;
-            $ext = $image2->getClientOriginalExtension();
-            $image2Name = time() . '.' . $ext; // Unique image name
+            $ext2 = $image2->getClientOriginalExtension();
+            $image2Name = uniqid() . '_' . time() . '.' . $ext2; // Unique image name
 
             // Save image to products directory
-            $image2->move(public_path('uploads/products'), $image2Name);
+            $image2->move(public_path('storage/'), $image2Name);
 
             // Save image name in database
             $product->image2 = $image2Name;

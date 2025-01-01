@@ -92,12 +92,12 @@
                                     <td class="border px-4 py-3">{{ $product->id }}</td>
                                     <td class="border px-4 py-3">
                                         @if ($product->image != "")
-                                            <img class="w-16 h-16 object-cover rounded-md" src="{{ asset('uploads/products/'.$product->image) }}" alt="">
+                                            <img class="w-16 h-16 object-cover rounded-md" src="{{ asset('storage/' . $product->image) }}" alt="">
                                         @endif
                                     </td>
                                     <td class="border px-4 py-3">
                                         @if ($product->image2 != "")
-                                            <img class="w-16 h-16 object-cover rounded-md" src="{{ asset('uploads/products/'.$product->image2) }}" alt="">
+                                            <img class="w-16 h-16 object-cover rounded-md" src="{{ asset('storage/' . $product->image2) }}" alt="">
                                         @endif
                                     </td>
                                     <td class="border px-4 py-3 font-medium">{{ $product->name }}</td>

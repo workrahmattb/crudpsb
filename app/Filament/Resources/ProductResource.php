@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -37,9 +38,13 @@ class ProductResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->directory('uploads/products')
+                    ->required(),
                 Forms\Components\FileUpload::make('image2')
-                    ->image(),
+                    ->image()
+                    ->directory('uploads/products')
+                    ->required(),
             ]);
     }
 
@@ -55,8 +60,10 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\ImageColumn::make('image2'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Uploaded Image'),
+                Tables\Columns\ImageColumn::make('image2')
+                    ->label('Uploaded Image 2'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -71,6 +78,8 @@ class ProductResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->defaultSort('created_at', 'desc')
             ->bulkActions([

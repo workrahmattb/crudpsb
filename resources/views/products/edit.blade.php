@@ -65,7 +65,7 @@
                                 <label for="image" class="block text-lg font-medium">Image</label>
                                 <input type="file" class="w-full mt-2 p-3 border border-gray-300 rounded-lg" name="image">
                                 @if ($product->image != "")
-                                    <img class="w-1/2 my-3" src="{{ asset('uploads/products/'.$product->image) }}" alt="">
+                                    <img class="w-1/2 my-3" src="{{ asset('storage/' . $product->image) }}" alt="">
                                 @endif
                             </div>
 
@@ -74,7 +74,7 @@
                                 <label for="image2" class="block text-lg font-medium">Image2</label>
                                 <input type="file" class="w-full mt-2 p-3 border border-gray-300 rounded-lg" name="image2">
                                 @if ($product->image2 != "")
-                                    <img class="w-1/2 my-3" src="{{ asset('uploads/products/'.$product->image2) }}" alt="">
+                                    <img class="w-1/2 my-3" src="{{ asset('storage/' . $product->image2) }}" alt="">
                                 @endif
                             </div>
 
