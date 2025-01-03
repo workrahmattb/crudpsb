@@ -11,8 +11,11 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\FileUpload;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class ProductResource extends Resource
 {
@@ -78,7 +81,25 @@ class ProductResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->action(function (Model $record) {
+                        try {
+                            Storage::disk('public')->delete($record->image);
+                            Storage::disk('public')->delete($record->image2);
+                            $record->delete();
+
+                            Notification::make()
+                                ->success()
+                                ->send()
+                                ->title('Product Deleted');
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->danger()
+                                ->send()
+                                ->title('Error Deleting Product');
+                        }
+                    }),
                 Tables\Actions\ViewAction::make(),
             ])
             ->defaultSort('created_at', 'desc')

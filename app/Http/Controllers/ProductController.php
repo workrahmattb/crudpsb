@@ -149,7 +149,7 @@ class ProductController extends Controller
         if ($request->image != "") {
 
             // delete old image
-            File::delete(public_path('uploads/products/' . $product->image));
+            File::delete(public_path('storage/' . $product->image));
 
             // here we will store image
             $image = $request->image;
@@ -157,7 +157,7 @@ class ProductController extends Controller
             $imageName = time() . '.' . $ext; // Unique image name
 
             // Save image to products directory
-            $image->move(public_path('uploads/products'), $imageName);
+            $image->move(public_path('storage/'), $imageName);
 
             // Save image name in database
             $product->image = $imageName;
@@ -173,7 +173,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         // delete image
-        File::delete(public_path('uploads/products/' . $product->image));
+        File::delete(public_path('storage/' . $product->image));
+        File::delete(public_path('storage/' . $product->image2));
 
         // delete product from database
         $product->delete();
