@@ -35,13 +35,15 @@ class SantriResource extends Resource
 
                                         Forms\Components\TextInput::make('nama')
                                             //->required()
+                                            ->label('Nama Anak')
                                             ->maxLength(255),
                                         Forms\Components\TextInput::make('tempat_lahir')
                                             //->required()
                                             ->maxLength(255),
                                         Forms\Components\DatePicker::make('tanggal_lahir')
                                             //->required()
-                                            ->displayFormat('d/m/Y'),
+                                            ->displayFormat('d/m/Y')
+                                            ->label('Tanggal Lahir'),
                                         Forms\Components\TextInput::make('nik')
                                             //->required()
                                             ->numeric()
