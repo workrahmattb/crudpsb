@@ -14,8 +14,8 @@
         <div class="container mx-auto flex items-center justify-between py-4 px-6">
           <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
               <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-              <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                  <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo">
+              <<a href="https://syafaaturrasul.com" class="flex items-center space-x-3 rtl:space-x-reverse">
+                  <img src="https://syafaaturrasul.com/wp-content/uploads/2025/01/PONDOK-PESANTREN-SYAFAATURRASUL-3-1536x384.jpg" class="h-10" alt="Flowbite Logo">
                   <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
               </a>
               <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">

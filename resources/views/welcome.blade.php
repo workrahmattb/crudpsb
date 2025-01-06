@@ -13,9 +13,9 @@
       <div class="container mx-auto flex items-center justify-between py-4 px-6">
         <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo">
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+            <a href="https://syafaaturrasul.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <img src="https://syafaaturrasul.com/wp-content/uploads/2025/01/PONDOK-PESANTREN-SYAFAATURRASUL-3-1536x384.jpg" class="h-8" alt="Flowbite Logo">
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             </a>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <a href="/products/create" class="bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Daftar</a>
@@ -50,10 +50,10 @@
 
     <!-- Hero Section -->
     <section class="bg-green-500 text-white">
-      <div class="container mx-auto flex flex-col items-center justify-center text-center py-20 px-6">
+      <div class="container mx-auto flex flex-col items-center justify-center text-center py-14 px-6">
         <h1 class="text-4xl md:text-6xl font-bold mb-6">Welcome to <br/> Pondok Pesantren Syafa'aturrasul</h1>
-        <p class="text-lg md:text-xl mb-8">We provide the best solutions for your business needs.</p>
-        <a href="/products/create" class="bg-white text-green-500 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100">Daftar</a>
+        <p class="text-3xl md:text-3xl mb-8">Kuantan Singingi - Riau</p>
+        <a href="/products/create" class="bg-white text-2xl text-green-500 px-20 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100">Daftar</a>
       </div>
     </section>
 
