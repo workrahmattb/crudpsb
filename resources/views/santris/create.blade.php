@@ -7,6 +7,10 @@
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@1.5.4/dist/flowbite.min.css" rel="stylesheet">
     @vite(['resources/css/app.css','resources/js/app.js'])
+    <style>
+        .step { display: none; }
+        .step.active { display: block; }
+    </style>
 </head>
   <body class="bg-gray-100 text-gray-800">
 
@@ -14,9 +18,9 @@
         <div class="container mx-auto flex items-center justify-between py-4 px-6">
           <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
               <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-              <<a href="https://syafaaturrasul.com" class="flex items-center space-x-3 rtl:space-x-reverse">
+              <a href="https://syafaaturrasul.com" class="flex items-center space-x-3 rtl:space-x-reverse">
                   <img src="https://syafaaturrasul.com/wp-content/uploads/2025/01/PONDOK-PESANTREN-SYAFAATURRASUL-3-1536x384.jpg" class="h-10" alt="Flowbite Logo">
-                  <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+                  <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
               </a>
               <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                   <a href="/santri/create" class="bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Daftar</a>
@@ -69,19 +73,25 @@
                     <h3 class="text-white text-xl">Daftar Ulang</h3>
                 </div>
 
-                <div class="flex justify-between mb-8">
-                    <button id="step-1-btn" class="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">Step 1</button>
-                    <button id="step-2-btn" class="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">Step 2</button>
-                    <button id="step-3-btn" class="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">Step 3</button>
-                    <button id="step-4-btn" class="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">Step 4</button>
+                @if (Session::has('error_message'))
+                <div class="mb-4">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                        {{ Session::get('error_message') }}
+                    </div>
                 </div>
+                @endif
+
 
                 <form enctype="multipart/form-data" action="{{ route('santris.store') }}" method="post" class="p-4">
                     @csrf
+                    <!-- ini untuk percobaan -->
+                <div class="step active">
                     <div class="mb-4">
                         <label for="nama" class="block text-lg font-medium text-gray-700">Nama</label>
+
                         <input value="{{ old('nama') }}" type="text" id="nama" name="nama" placeholder="Nama"
                             class="form-control w-full p-3 rounded-lg border @error('nama') border-red-500  @enderror">
+                            <span class="error" id="namaError"></span>
                         @error('nama')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -104,7 +114,14 @@
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+                    <button type="button" onclick="nextStep()">Next</button>
+                </div>
 
+                <!-- end step 1 -->
+
+
+                <!-- start step 2 -->
+                <div class="step">
                     <div class="mb-4">
                         <label for="nik" class="block text-lg font-medium text-gray-700">NIK</label>
                         <input value="{{ old('nik') }}" type="text" id="nik" name="nik" placeholder="NIK"
@@ -150,6 +167,14 @@
                         @enderror
                     </div>
 
+                    <button type="button" onclick="prevStep()">Back</button>
+                    <button type="button" onclick="nextStep()">Next</button>
+                </div>
+                    <!-- end step 2 -->
+
+
+                    <!-- step finish -->
+                <div class="step">
                     <div class="mb-4">
                         <label for="tk" class="block text-lg font-medium text-gray-700">TK</label>
                         <input value="{{ old('tk') }}" type="text" id="tk" name="tk" placeholder="TK"
@@ -188,11 +213,57 @@
 
 
                     <div class="mb-4">
+
+                        <button type="button" onclick="prevStep()">Back</button>
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-500">
                             Submit
                         </button>
                     </div>
+                </div>
                 </form>
+
+                <script>
+                    let currentStep = 0;
+                    const steps = document.querySelectorAll('.step');
+
+                    function showStep(step) {
+                        steps.forEach((element, index) => {
+                            element.classList.toggle('active', index === step);
+                        });
+                    }
+
+                    function nextStep() {
+                        if (currentStep < steps.length - 1) {
+                            currentStep++;
+                            showStep(currentStep);
+                        }
+                    }
+
+                    function prevStep() {
+                        if (currentStep > 0) {
+                            currentStep--;
+                            showStep(currentStep);
+                        }
+                    }
+
+                    function validateStep() {
+                        let isValid = true;
+                        const currentInputs = steps[currentStep].querySelectorAll('input, textarea');
+
+                        currentInputs.forEach((input) => {
+                            const errorElement = document.getElementById(`${input.id}Error`);
+                            if (!input.checkValidity()) {
+                                errorElement.textContent = input.validationMessage;
+                                isValid = false;
+                            } else {
+                                errorElement.textContent = '';
+                            }
+                        });
+
+                        return isValid;
+                    }
+                </script>
+
             </div>
         </div>
     </div>

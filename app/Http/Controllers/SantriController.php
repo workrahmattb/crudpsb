@@ -64,7 +64,11 @@ class SantriController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('santris.create')->withInput()->withErrors($validator);
+            return redirect()
+            ->route('santris.create')
+            ->withInput()
+            ->withErrors($validator)
+            ->with('error_message', 'Silakan periksa kembali data yang dimasukkan.');
         }
 
         // here we will insert santri in db
