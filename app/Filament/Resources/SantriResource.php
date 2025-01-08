@@ -21,6 +21,8 @@ class SantriResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Data Santri';
+
     public static function form(Form $form): Form
     {
         return $form

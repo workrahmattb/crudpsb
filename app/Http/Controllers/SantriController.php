@@ -12,7 +12,7 @@ class SantriController extends Controller
     // This method will show santris page
     public function index()
     {
-        $santris = Santri::orderBy('created_at', 'DESC')->paginate(3);
+        $santris = Santri::orderBy('created_at', 'DESC')->paginate(10);
 
         return view('santris.listsantri', [
             'santris' => $santris
@@ -43,6 +43,20 @@ class SantriController extends Controller
             'paud' => 'nullable|string|max:255',
             'hobi' => 'nullable|string|max:255',
             'cita_cita' => 'nullable|string|max:255',
+            'anak_ke' => 'nullable|integer|min:1',
+            'jumlah_saudara' => 'nullable|integer|min:1',
+            'kks' => 'nullable|string|max:255',
+            'pkh' => 'nullable|string|max:255',
+            'kip' => 'nullable|string|max:255',
+            'jenjang_pendidikan_sebelumnya' => 'required|string|max:255',
+            'status_sekolah_sebelumnya' => 'required|string|max:255',
+            'nama_sekolah_sebelumnya' => 'required|string|max:255',
+            'npsn_sekolah_sebelumnya' => 'required|string|max:255',
+            'alamat_sekolah_sebelumnya' => 'required|string|max:255',
+            'kecamatan_sekolah_sebelumnya' => 'required|string|max:255',
+            'kabupaten_sekolah_sebelumnya' => 'required|string|max:255',
+            'provinsi_sekolah_sebelumnya' => 'required|string|max:255',
+
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
@@ -61,6 +75,15 @@ class SantriController extends Controller
             'nis.digits_between' => 'NIS harus memiliki panjang antara 1 hingga 10 digit.',
             'hobi.max' => 'Hobi tidak boleh lebih dari 255 karakter.',
             'cita_cita.max' => 'Cita-cita tidak boleh lebih dari 255 karakter.',
+            'jenjang_pendidikan_sebelumnya.required' => 'Jenjang pendidikan sebelumnya wajib diisi.',
+            'status_sekolah_sebelumnya.required' => 'Status sekolah sebelumnya wajib diisi.',
+            'nama_sekolah_sebelumnya.required' => 'Nama sekolah sebelumnya wajib diisi.',
+            'npsn_sekolah_sebelumnya.required' => 'NPSN sekolah sebelumnya wajib diisi.',
+            'alamat_sekolah_sebelumnya.required' => 'Alamat sekolah sebelumnya wajib diisi.',
+            'kecamatan_sekolah_sebelumnya.required' => 'Kecamatan sekolah sebelumnya wajib diisi.',
+            'kabupaten_sekolah_sebelumnya.required' => 'Kabupaten sekolah sebelumnya wajib diisi.',
+            'provinsi_sekolah_sebelumnya.required' => 'Provinsi sekolah sebelumnya wajib diisi.',
+
         ]);
 
         if ($validator->fails()) {
@@ -85,6 +108,21 @@ class SantriController extends Controller
         $santri->paud = $request->paud;
         $santri->hobi = $request->hobi;
         $santri->cita_cita = $request->cita_cita;
+        $santri->anak_ke = $request->anak_ke;
+        $santri->jumlah_saudara = $request->jumlah_saudara;
+        $santri->tgl_masuk = $request->tgl_masuk;
+        $santri->kks = $request->kks;
+        $santri->pkh = $request->pkh;
+        $santri->kip = $request->kip;
+        $santri->jenjang_pendidikan_sebelumnya = $request->jenjang_pendidikan_sebelumnya;
+        $santri->status_sekolah_sebelumnya = $request->status_sekolah_sebelumnya;
+        $santri->nama_sekolah_sebelumnya = $request->nama_sekolah_sebelumnya;
+        $santri->npsn_sekolah_sebelumnya = $request->npsn_sekolah_sebelumnya;
+        $santri->alamat_sekolah_sebelumnya = $request->alamat_sekolah_sebelumnya;
+        $santri->kecamatan_sekolah_sebelumnya = $request->kecamatan_sekolah_sebelumnya;
+        $santri->kabupaten_sekolah_sebelumnya = $request->kabupaten_sekolah_sebelumnya;
+        $santri->provinsi_sekolah_sebelumnya = $request->provinsi_sekolah_sebelumnya;
+
         $santri->save();
 
         if ($request->image != "") {
@@ -158,7 +196,9 @@ class SantriController extends Controller
             $santri->save();
         }
 
-        return redirect()->route('santris.index')->with('success', 'Santri updated successfully.');
+        return redirect()
+        ->route('santris.pdf', ['id' => $santri->id])
+        ->with('success', 'Santri dengan nama ' . $santri->nama . ' berhasil ditambahkan dan PDF siap diunduh.');
     }
 
     // This method will delete a santri
