@@ -61,10 +61,6 @@
       </section>
 
       <div class="container mx-auto my-4">
-        <div class="flex justify-end mb-4">
-            <a href="{{ route('santris.index') }}" class="btn btn-dark text-white bg-green-500 px-4 py-2 rounded-lg hover:bg-gray-600">Back</a>
-        </div>
-
         <div class="flex justify-center">
             <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg">
 
@@ -260,7 +256,7 @@
 
                     <div class="mb-4">
                         <label for="kks" class="block text-lg font-medium text-gray-700">KKS</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Keluarga Sejahtera (Opsional)</small>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Keluarga Sejahtera (Diisi bagi yang punya)</small>
                         <input
                             value="{{ old('kks') }}"
                             type="number"
@@ -275,7 +271,7 @@
 
                     <div class="mb-4">
                         <label for="pkh" class="block text-lg font-medium text-gray-700">PKH</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor Program Keluarga Harapan (Opsional)</small>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Program Keluarga Harapan (Diisi bagi yang punya)</small>
                         <input
                             value="{{ old('pkh') }}"
                             type="number"
@@ -290,7 +286,7 @@
 
                     <div class="mb-4">
                         <label for="kip" class="block text-lg font-medium text-gray-700">KIP</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Indonesia Pintar (Opsional)</small>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Indonesia Pintar (Diisi bagi yang punya)</small>
                         <input
                             value="{{ old('kip') }}"
                             type="number"
@@ -458,7 +454,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="nik_ayah" class="block text-lg font-medium text-gray-700">NIK Ayah</label>
-                        <input value="{{ old('nik_ayah') }}" type="text" id="nik_ayah" name="nik_ayah" placeholder="NIK Ayah"
+                        <input value="{{ old('nik_ayah') }}" type="number" id="nik_ayah" name="nik_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('nik_ayah') border-red-500 @enderror">
                         <span class="error" id="nikAyahError"></span>
                         @error('nik_ayah')
@@ -468,7 +464,7 @@
 
                     <div class="mb-4">
                         <label for="nama_ayah" class="block text-lg font-medium text-gray-700">Nama Ayah</label>
-                        <input value="{{ old('nama_ayah') }}" type="text" id="nama_ayah" name="nama_ayah" placeholder="Nama Ayah"
+                        <input value="{{ old('nama_ayah') }}" type="text" id="nama_ayah" name="nama_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('nama_ayah') border-red-500 @enderror">
                         <span class="error" id="namaAyahError"></span>
                         @error('nama_ayah')
@@ -478,7 +474,7 @@
 
                     <div class="mb-4">
                         <label for="tempat_lahir_ayah" class="block text-lg font-medium text-gray-700">Tempat Lahir Ayah</label>
-                        <input value="{{ old('tempat_lahir_ayah') }}" type="text" id="tempat_lahir_ayah" name="tempat_lahir_ayah" placeholder="Tempat Lahir Ayah"
+                        <input value="{{ old('tempat_lahir_ayah') }}" type="text" id="tempat_lahir_ayah" name="tempat_lahir_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('tempat_lahir_ayah') border-red-500 @enderror">
                         <span class="error" id="tempatLahirAyahError"></span>
                         @error('tempat_lahir_ayah')
@@ -498,8 +494,17 @@
 
                     <div class="mb-4">
                         <label for="status_ayah" class="block text-lg font-medium text-gray-700">Status Ayah</label>
-                        <input value="{{ old('status_ayah') }}" type="text" id="status_ayah" name="status_ayah" placeholder="Status Ayah"
+                        <select
+                            value="{{ old('status_ayah') }}"
+                            type="text"
+                            id="status_ayah"
+                            name="status_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('status_ayah') border-red-500 @enderror">
+                            <option value="">Pilih Status Ayah</option>
+                            <option value="hidup" {{ old('status_ayah') == 'hidup' ? 'selected' : '' }}>Hidup</option>
+                            <option value="meninggal" {{ old('status_ayah') == 'meninggal' ? 'selected' : '' }}>Meninggal</option>
+                            <option value="tanpa keterangan" {{ old('status_ayah') == 'tanpa keterangan' ? 'selected' : '' }}>Tanpa Keterangan</option>
+                        </select>
                         <span class="error" id="statusAyahError"></span>
                         @error('status_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
@@ -508,7 +513,7 @@
 
                     <div class="mb-4">
                         <label for="no_hp_ayah" class="block text-lg font-medium text-gray-700">No. HP Ayah</label>
-                        <input value="{{ old('no_hp_ayah') }}" type="text" id="no_hp_ayah" name="no_hp_ayah" placeholder="No. HP Ayah"
+                        <input value="{{ old('no_hp_ayah') }}" type="number" id="no_hp_ayah" name="no_hp_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('no_hp_ayah') border-red-500 @enderror">
                         <span class="error" id="noHpAyahError"></span>
                         @error('no_hp_ayah')
@@ -605,7 +610,7 @@
                     <!-- For Ibu's information -->
                     <div class="mb-4">
                         <label for="nik_ibu" class="block text-lg font-medium text-gray-700">NIK Ibu</label>
-                        <input value="{{ old('nik_ibu') }}" type="text" id="nik_ibu" name="nik_ibu" placeholder="NIK Ibu"
+                        <input value="{{ old('nik_ibu') }}" type="number" id="nik_ibu" name="nik_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('nik_ibu') border-red-500 @enderror">
                         <span class="error" id="nikIbuError"></span>
                         @error('nik_ibu')
@@ -615,7 +620,7 @@
 
                     <div class="mb-4">
                         <label for="nama_ibu" class="block text-lg font-medium text-gray-700">Nama Ibu</label>
-                        <input value="{{ old('nama_ibu') }}" type="text" id="nama_ibu" name="nama_ibu" placeholder="Nama Ibu"
+                        <input value="{{ old('nama_ibu') }}" type="text" id="nama_ibu" name="nama_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('nama_ibu') border-red-500 @enderror">
                         <span class="error" id="namaIbuError"></span>
                         @error('nama_ibu')
@@ -625,7 +630,7 @@
 
                     <div class="mb-4">
                         <label for="tempat_lahir_ibu" class="block text-lg font-medium text-gray-700">Tempat Lahir Ibu</label>
-                        <input value="{{ old('tempat_lahir_ibu') }}" type="text" id="tempat_lahir_ibu" name="tempat_lahir_ibu" placeholder="Tempat Lahir Ibu"
+                        <input value="{{ old('tempat_lahir_ibu') }}" type="text" id="tempat_lahir_ibu" name="tempat_lahir_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('tempat_lahir_ibu') border-red-500 @enderror">
                         <span class="error" id="tempatLahirIbuError"></span>
                         @error('tempat_lahir_ibu')
@@ -645,8 +650,17 @@
 
                     <div class="mb-4">
                         <label for="status_ibu" class="block text-lg font-medium text-gray-700">Status Ibu</label>
-                        <input value="{{ old('status_ibu') }}" type="text" id="status_ibu" name="status_ibu" placeholder="Status Ibu"
+                        <select
+                            value="{{ old('status_ibu') }}"
+                            type="text" id="status_ibu"
+                            name="status_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('status_ibu') border-red-500 @enderror">
+                            <option value="">Pilih Status Ibu</option>
+                            <option value="hidup" {{ old('status_ibu') == 'hidup' ? 'selected' : '' }}>Hidup</option>
+                            <option value="meninggal" {{ old('status_ibu') == 'meninggal' ? 'selected' : '' }}>Meninggal</option>
+                            <option value="tanpa keterangan" {{ old('status_ibu') == 'tanpa keterangan' ? 'selected' : '' }}>Tanpa Keterangan</option>
+                        </select>
+
                         <span class="error" id="statusIbuError"></span>
                         @error('status_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
@@ -655,7 +669,7 @@
 
                     <div class="mb-4">
                         <label for="no_hp_ibu" class="block text-lg font-medium text-gray-700">No. HP Ibu</label>
-                        <input value="{{ old('no_hp_ibu') }}" type="text" id="no_hp_ibu" name="no_hp_ibu" placeholder="No. HP Ibu"
+                        <input value="{{ old('no_hp_ibu') }}" type="number" id="no_hp_ibu" name="no_hp_ibu" placeholder="No. HP Ibu"
                             class="form-control w-full p-3 rounded-lg border @error('no_hp_ibu') border-red-500 @enderror">
                         <span class="error" id="noHpIbuError"></span>
                         @error('no_hp_ibu')
@@ -665,8 +679,22 @@
 
                     <div class="mb-4">
                         <label for="pendidikan_ibu" class="block text-lg font-medium text-gray-700">Pendidikan Ibu</label>
-                        <input value="{{ old('pendidikan_ibu') }}" type="text" id="pendidikan_ibu" name="pendidikan_ibu" placeholder="Pendidikan Ibu"
+                        <select
+                            value="{{ old('pendidikan_ibu') }}"
+                            type="text" id="pendidikan_ibu"
+                            name="pendidikan_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('pendidikan_ibu') border-red-500 @enderror">
+                            <option value="">Pilih Pendidikan Ibu</option>
+                            <option value="SD" {{ old('pendidikan_ibu') == 'SD' ? 'selected' : '' }}>SD</option>
+                            <option value="SMP" {{ old('pendidikan_ibu') == 'SMP' ? 'selected' : '' }}>SMP</option>
+                            <option value="SMA" {{ old('pendidikan_ibu') == 'SMA' ? 'selected' : '' }}>SMA</option>
+                            <option value="D1" {{ old('pendidikan_ibu') == 'D1' ? 'selected' : '' }}>Diploma 1 (D1)</option>
+                            <option value="D2" {{ old('pendidikan_ibu') == 'D2' ? 'selected' : '' }}>Diploma 2 (D2)</option>
+                            <option value="D3" {{ old('pendidikan_ibu') == 'D3' ? 'selected' : '' }}>Diploma 3 (D3)</option>
+                            <option value="S1" {{ old('pendidikan_ibu') == 'S1' ? 'selected' : '' }}>Sarjana (S1)</option>
+                            <option value="S2" {{ old('pendidikan_ibu') == 'S2' ? 'selected' : '' }}>Magister (S2)</option>
+                            <option value="S3" {{ old('pendidikan_ibu') == 'S3' ? 'selected' : '' }}>Doktoral (S3)</option>
+                        </select>
                         <span class="error" id="pendidikanIbuError"></span>
                         @error('pendidikan_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
@@ -675,8 +703,31 @@
 
                     <div class="mb-4">
                         <label for="pekerjaan_ibu" class="block text-lg font-medium text-gray-700">Pekerjaan Ibu</label>
-                        <input value="{{ old('pekerjaan_ibu') }}" type="text" id="pekerjaan_ibu" name="pekerjaan_ibu" placeholder="Pekerjaan Ibu"
+                        <select
+                            value="{{ old('pekerjaan_ibu') }}"
+                            type="text"
+                            id="pekerjaan_ibu"
+                            name="pekerjaan_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('pekerjaan_ibu') border-red-500 @enderror">
+                            <option value="">Pilih Pekerjaan Ibu</option>
+                            <option value="Tidak Bekerja" {{ old('pekerjaan_ibu') == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
+                            <option value="Petani" {{ old('pekerjaan_ibu') == 'Petani' ? 'selected' : '' }}>Petani</option>
+                            <option value="Nelayan" {{ old('pekerjaan_ibu') == 'Nelayan' ? 'selected' : '' }}>Nelayan</option>
+                            <option value="Buruh" {{ old('pekerjaan_ibu') == 'Buruh' ? 'selected' : '' }}>Buruh</option>
+                            <option value="Pegawai Swasta" {{ old('pekerjaan_ibu') == 'Pegawai Swasta' ? 'selected' : '' }}>Pegawai Swasta</option>
+                            <option value="PNS" {{ old('pekerjaan_ibu') == 'PNS' ? 'selected' : '' }}>Pegawai Negeri Sipil (PNS)</option>
+                            <option value="TNI/Polri" {{ old('pekerjaan_ibu') == 'TNI/Polri' ? 'selected' : '' }}>TNI/Polri</option>
+                            <option value="Wiraswasta" {{ old('pekerjaan_ibu') == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
+                            <option value="Pedagang" {{ old('pekerjaan_ibu') == 'Pedagang' ? 'selected' : '' }}>Pedagang</option>
+                            <option value="Guru/Dosen" {{ old('pekerjaan_ibu') == 'Guru/Dosen' ? 'selected' : '' }}>Guru/Dosen</option>
+                            <option value="Dokter" {{ old('pekerjaan_ibu') == 'Dokter' ? 'selected' : '' }}>Dokter</option>
+                            <option value="Pengacara" {{ old('pekerjaan_ibu') == 'Pengacara' ? 'selected' : '' }}>Pengacara</option>
+                            <option value="Notaris" {{ old('pekerjaan_ibu') == 'Notaris' ? 'selected' : '' }}>Notaris</option>
+                            <option value="Seniman" {{ old('pekerjaan_ibu') == 'Seniman' ? 'selected' : '' }}>Seniman</option>
+                            <option value="Penulis" {{ old('pekerjaan_ibu') == 'Penulis' ? 'selected' : '' }}>Penulis</option>
+                            <option value="Pensiunan" {{ old('pekerjaan_ibu') == 'Pensiunan' ? 'selected' : '' }}>Pensiunan</option>
+                            <option value="Lainnya" {{ old('pekerjaan_ibu') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        </select>
                         <span class="error" id="pekerjaanIbuError"></span>
                         @error('pekerjaan_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
@@ -685,8 +736,22 @@
 
                     <div class="mb-4">
                         <label for="penghasilan_ibu" class="block text-lg font-medium text-gray-700">Penghasilan Ibu</label>
-                        <input value="{{ old('penghasilan_ibu') }}" type="text" id="penghasilan_ibu" name="penghasilan_ibu" placeholder="Penghasilan Ibu"
+                        <select
+                            value="{{ old('penghasilan_ibu') }}"
+                            type="text" id="penghasilan_ibu"
+                            name="penghasilan_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('penghasilan_ibu') border-red-500 @enderror">
+                            <option value="">Pilih Penghasilan Ibu</option>
+                            <option value="Tidak Ada Penghasilan" {{ old('penghasilan_ibu') == 'Tidak Ada Penghasilan' ? 'selected' : '' }}>Tidak Ada Penghasilan</option>
+                            <option value="0-1 juta" {{ old('penghasilan_ibu') == '0-1 juta' ? 'selected' : '' }}>0 - 1 Juta</option>
+                            <option value="1-3 juta" {{ old('penghasilan_ibu') == '1-3 juta' ? 'selected' : '' }}>1 - 3 Juta</option>
+                            <option value="3-5 juta" {{ old('penghasilan_ibu') == '3-5 juta' ? 'selected' : '' }}>3 - 5 Juta</option>
+                            <option value="5-10 juta" {{ old('penghasilan_ibu') == '5-10 juta' ? 'selected' : '' }}>5 - 10 Juta</option>
+                            <option value="10-20 juta" {{ old('penghasilan_ibu') == '10-20 juta' ? 'selected' : '' }}>10 - 20 Juta</option>
+                            <option value="20-50 juta" {{ old('penghasilan_ibu') == '20-50 juta' ? 'selected' : '' }}>20 - 50 Juta</option>
+                            <option value="50 juta lebih" {{ old('penghasilan_ibu') == '50 juta lebih' ? 'selected' : '' }}>50 Juta Lebih</option>
+                            <option value="Tidak Tahu" {{ old('penghasilan_ibu') == 'Tidak Tahu' ? 'selected' : '' }}>Tidak Tahu</option>
+                        </select>
                         <span class="error" id="penghasilanIbuError"></span>
                         @error('penghasilan_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>

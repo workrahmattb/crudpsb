@@ -56,6 +56,24 @@ class SantriController extends Controller
             'kecamatan_sekolah_sebelumnya' => 'required|string|max:255',
             'kabupaten_sekolah_sebelumnya' => 'required|string|max:255',
             'provinsi_sekolah_sebelumnya' => 'required|string|max:255',
+            'nik_ayah' => 'required|string|max:255',
+            'nama_ayah' => 'required|string|max:255',
+            'tempat_lahir_ayah' => 'required|string|max:255',
+            'tanggal_lahir_ayah' => 'required|date',
+            'status_ayah' => 'required|string|max:255',
+            'no_hp_ayah' => 'nullable|string|max:20',
+            'pendidikan_ayah' => 'nullable|string|max:255',
+            'pekerjaan_ayah' => 'nullable|string|max:255',
+            'penghasilan_ayah' => 'nullable|string|max:255',
+            'nik_ibu' => 'required|string|max:255',
+            'nama_ibu' => 'required|string|max:255',
+            'tempat_lahir_ibu' => 'required|string|max:255',
+            'tanggal_lahir_ibu' => 'required|date',
+            'status_ibu' => 'required|string|max:255',
+            'no_hp_ibu' => 'nullable|string|max:20',
+            'pendidikan_ibu' => 'nullable|string|max:255',
+            'pekerjaan_ibu' => 'nullable|string|max:255',
+            'penghasilan_ibu' => 'nullable|string|max:255',
 
         ], [
             'nama.required' => 'Nama wajib diisi.',
@@ -83,6 +101,26 @@ class SantriController extends Controller
             'kecamatan_sekolah_sebelumnya.required' => 'Kecamatan sekolah sebelumnya wajib diisi.',
             'kabupaten_sekolah_sebelumnya.required' => 'Kabupaten sekolah sebelumnya wajib diisi.',
             'provinsi_sekolah_sebelumnya.required' => 'Provinsi sekolah sebelumnya wajib diisi.',
+            'nik_ayah.required' => 'NIK Ayah wajib diisi.',
+            'nama_ayah.required' => 'Nama Ayah wajib diisi.',
+            'tempat_lahir_ayah.required' => 'Tempat Lahir Ayah wajib diisi.',
+            'tanggal_lahir_ayah.required' => 'Tanggal Lahir Ayah wajib diisi.',
+            'tanggal_lahir_ayah.date' => 'Tanggal Lahir Ayah harus berupa tanggal yang valid.',
+            'status_ayah.required' => 'Status Ayah wajib diisi.',
+            'no_hp_ayah.required' => 'Nomor HP Ayah wajib diisi.',
+            'pendidikan_ayah.required' => 'Pendidikan Ayah wajib diisi.',
+            'pekerjaan_ayah.required' => 'Pekerjaan Ayah wajib diisi.',
+            'penghasilan_ayah.required' => 'Penghasilan Ayah wajib diisi.',
+            'nik_ibu.required' => 'NIK Ibu wajib diisi.',
+            'nama_ibu.required' => 'Nama Ibu wajib diisi.',
+            'tempat_lahir_ibu.required' => 'Tempat Lahir Ibu wajib diisi.',
+            'tanggal_lahir_ibu.required' => 'Tanggal Lahir Ibu wajib diisi.',
+            'tanggal_lahir_ibu.date' => 'Tanggal Lahir Ibu harus berupa tanggal yang valid.',
+            'status_ibu.required' => 'Status Ibu wajib diisi.',
+            'no_hp_ibu.required' => 'Nomor HP Ibu wajib diisi.',
+            'pendidikan_ibu.required' => 'Pendidikan Ibu wajib diisi.',
+            'pekerjaan_ibu.required' => 'Pekerjaan Ibu wajib diisi.',
+            'penghasilan_ibu.required' => 'Penghasilan Ibu wajib diisi.',
 
         ]);
 
@@ -122,6 +160,24 @@ class SantriController extends Controller
         $santri->kecamatan_sekolah_sebelumnya = $request->kecamatan_sekolah_sebelumnya;
         $santri->kabupaten_sekolah_sebelumnya = $request->kabupaten_sekolah_sebelumnya;
         $santri->provinsi_sekolah_sebelumnya = $request->provinsi_sekolah_sebelumnya;
+        $santri->nik_ayah = $request->nik_ayah;
+        $santri->nama_ayah = $request->nama_ayah;
+        $santri->tempat_lahir_ayah = $request->tempat_lahir_ayah;
+        $santri->tanggal_lahir_ayah = $request->tanggal_lahir_ayah;
+        $santri->status_ayah = $request->status_ayah;
+        $santri->no_hp_ayah = $request->no_hp_ayah;
+        $santri->pendidikan_ayah = $request->pendidikan_ayah;
+        $santri->pekerjaan_ayah = $request->pekerjaan_ayah;
+        $santri->penghasilan_ayah = $request->penghasilan_ayah;
+        $santri->nik_ibu = $request->nik_ibu;
+        $santri->nama_ibu = $request->nama_ibu;
+        $santri->tempat_lahir_ibu = $request->tempat_lahir_ibu;
+        $santri->tanggal_lahir_ibu = $request->tanggal_lahir_ibu;
+        $santri->status_ibu = $request->status_ibu;
+        $santri->no_hp_ibu = $request->no_hp_ibu;
+        $santri->pendidikan_ibu = $request->pendidikan_ibu;
+        $santri->pekerjaan_ibu = $request->pekerjaan_ibu;
+        $santri->penghasilan_ibu = $request->penghasilan_ibu;
 
         $santri->save();
 
