@@ -74,6 +74,16 @@ class SantriController extends Controller
             'pendidikan_ibu' => 'nullable|string|max:255',
             'pekerjaan_ibu' => 'nullable|string|max:255',
             'penghasilan_ibu' => 'nullable|string|max:255',
+            'status_milik' => 'nullable|string|max:255',
+            'alamat_rumah_tinggal' => 'nullable|string|max:255',
+            'rt' => 'nullable|string|max:255',
+            'rw' => 'nullable|string|max:255',
+            'desa' => 'required|string|max:255',
+            'kecamatan' => 'required|string|max:255',
+            'kabupaten' => 'required|string|max:255',
+            'provinsi' => 'required|string|max:255',
+            'kode_pos' => 'nullable|string|max:255',
+
 
         ], [
             'nama.required' => 'Nama wajib diisi.',
@@ -121,6 +131,11 @@ class SantriController extends Controller
             'pendidikan_ibu.required' => 'Pendidikan Ibu wajib diisi.',
             'pekerjaan_ibu.required' => 'Pekerjaan Ibu wajib diisi.',
             'penghasilan_ibu.required' => 'Penghasilan Ibu wajib diisi.',
+            'status_milik.required' => 'Status milik wajib diisi.',
+            'desa.required' => 'Desa wajib diisi.',
+            'kecamatan.required' => 'Kecamatan wajib diisi.',
+            'kabupaten.required' => 'Kabupaten wajib diisi.',
+            'provinsi.required' => 'Provinsi wajib diisi.',
 
         ]);
 
@@ -178,6 +193,16 @@ class SantriController extends Controller
         $santri->pendidikan_ibu = $request->pendidikan_ibu;
         $santri->pekerjaan_ibu = $request->pekerjaan_ibu;
         $santri->penghasilan_ibu = $request->penghasilan_ibu;
+        $santri->status_milik = $request->status_milik;
+        $santri->alamat_rumah_tinggal = $request->alamat_rumah_tinggal;
+        $santri->rt = $request->rt;
+        $santri->rw = $request->rw;
+        $santri->desa = $request->desa;
+        $santri->kecamatan = $request->kecamatan;
+        $santri->kabupaten = $request->kabupaten;
+        $santri->provinsi = $request->provinsi;
+        $santri->kode_pos = $request->kode_pos;
+
 
         $santri->save();
 

@@ -111,7 +111,7 @@
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-                    <button type="button" onclick="nextStep()">Next</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
 
                 <!-- end step 1 -->
@@ -161,8 +161,8 @@
 
 
 
-                    <button type="button" onclick="prevStep()">Back</button>
-                    <button type="button" onclick="nextStep()">Next</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
                     <!-- end step 2 -->
 
@@ -178,7 +178,7 @@
                             name="tk"
 
                             class="form-control w-full p-3 rounded-lg border @error('tk') border-red-500  @enderror">
-                            <option value="">Pilih</option>
+                            <option value="" disabled selected>Pilih</option>
                             <option value="ya" {{ old('tk') == 'ya' ? 'selected' : '' }}>Iya</option>
                             <option value="tidak" {{ old('tk') == 'tidak' ? 'selected' : '' }}>Tidak</option>
                         </select>
@@ -197,7 +197,7 @@
                             name="paud"
 
                             class="form-control w-full p-3 rounded-lg border @error('paud') border-red-500  @enderror">
-                            <option value="">Pilih</option>
+                            <option value="" disabled selected>Pilih</option>
                             <option value="ya" {{ old('paud') == 'ya' ? 'selected' : '' }}>Iya</option>
                             <option value="tidak" {{ old('paud') == 'tidak' ? 'selected' : '' }}>Tidak</option>
                         </select>
@@ -300,8 +300,8 @@
                     </div>
 
 
-                    <button type="button" onclick="prevStep()">Back</button>
-                    <button type="button" onclick="nextStep()">Next</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
 
                 <!-- end step 2 -->
@@ -322,7 +322,7 @@
                             name="jenjang_pendidikan_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('jenjang_pendidikan_sebelumnya') border-red-500 @enderror">
-                            <option value="">Pilih Jenjang Pendidikan</option>
+                            <option value="" disabled selected>Pilih Jenjang Pendidikan</option>
                             <option value="SD" {{ old('jenjang_pendidikan_sebelumnya') == 'SD' ? 'selected' : '' }}>SD / MI</option>
                             <option value="SMP" {{ old('jenjang_pendidikan_sebelumnya') == 'SMP' ? 'selected' : '' }}>SMP / MTs</option>
                         </select>
@@ -344,7 +344,7 @@
                             name="status_sekolah_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('status_sekolah_sebelumnya') border-red-500 @enderror">
-                            <option value="">Pilih Status Sekolah</option>
+                            <option value="" disabled selected>Pilih Status Sekolah</option>
                             <option value="Negeri" {{ old('status_sekolah_sebelumnya') == 'Negeri' ? 'selected' : '' }}>Negeri</option>
                             <option value="Swasta" {{ old('status_sekolah_sebelumnya') == 'Swasta' ? 'selected' : '' }}>Swasta</option>
                         </select>
@@ -444,8 +444,8 @@
                     </div>
 
 
-                    <button type="button" onclick="prevStep()">Back</button>
-                    <button type="button" onclick="nextStep()">Next</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
 
                 <div class="step">
@@ -500,7 +500,7 @@
                             id="status_ayah"
                             name="status_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('status_ayah') border-red-500 @enderror">
-                            <option value="">Pilih Status Ayah</option>
+                            <option value="" disabled selected>Pilih Status Ayah</option>
                             <option value="hidup" {{ old('status_ayah') == 'hidup' ? 'selected' : '' }}>Hidup</option>
                             <option value="meninggal" {{ old('status_ayah') == 'meninggal' ? 'selected' : '' }}>Meninggal</option>
                             <option value="tanpa keterangan" {{ old('status_ayah') == 'tanpa keterangan' ? 'selected' : '' }}>Tanpa Keterangan</option>
@@ -529,7 +529,7 @@
                             id="pendidikan_ayah"
                             name="pendidikan_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('pendidikan_ayah') border-red-500 @enderror">
-                            <option value="">Pilih Pendidikan Ayah</option>
+                            <option value="" disabled selected>Pilih Pendidikan Ayah</option>
                             <option value="SD" {{ old('pendidikan_ayah') == 'SD' ? 'selected' : '' }}>SD</option>
                             <option value="SMP" {{ old('pendidikan_ayah') == 'SMP' ? 'selected' : '' }}>SMP</option>
                             <option value="SMA" {{ old('pendidikan_ayah') == 'SMA' ? 'selected' : '' }}>SMA</option>
@@ -554,7 +554,7 @@
                             id="pekerjaan_ayah"
                             name="pekerjaan_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('pekerjaan_ayah') border-red-500 @enderror">
-                            <option value="">Pilih Pekerjaan Ayah</option>
+                            <option value="" disabled selected>Pilih Pekerjaan Ayah</option>
                             <option value="Tidak Bekerja" {{ old('pekerjaan_ayah') == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
                             <option value="Petani" {{ old('pekerjaan_ayah') == 'Petani' ? 'selected' : '' }}>Petani</option>
                             <option value="Nelayan" {{ old('pekerjaan_ayah') == 'Nelayan' ? 'selected' : '' }}>Nelayan</option>
@@ -587,7 +587,7 @@
                         name="penghasilan_ayah"
                         placeholder="Penghasilan Ayah"
                         class="form-control w-full p-3 rounded-lg border @error('penghasilan_ayah') border-red-500 @enderror">
-                        <option value="">Pilih Penghasilan Ayah</option>
+                        <option value="" disabled selected>Pilih Penghasilan Ayah</option>
                         <option value="0-1 juta" {{ old('penghasilan_ayah') == '0-1 juta' ? 'selected' : '' }}>0 - 1 Juta</option>
                         <option value="1-3 juta" {{ old('penghasilan_ayah') == '1-3 juta' ? 'selected' : '' }}>1 - 3 Juta</option>
                         <option value="3-5 juta" {{ old('penghasilan_ayah') == '3-5 juta' ? 'selected' : '' }}>3 - 5 Juta</option>
@@ -655,7 +655,7 @@
                             type="text" id="status_ibu"
                             name="status_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('status_ibu') border-red-500 @enderror">
-                            <option value="">Pilih Status Ibu</option>
+                            <option value="" disabled selected>Pilih Status Ibu</option>
                             <option value="hidup" {{ old('status_ibu') == 'hidup' ? 'selected' : '' }}>Hidup</option>
                             <option value="meninggal" {{ old('status_ibu') == 'meninggal' ? 'selected' : '' }}>Meninggal</option>
                             <option value="tanpa keterangan" {{ old('status_ibu') == 'tanpa keterangan' ? 'selected' : '' }}>Tanpa Keterangan</option>
@@ -684,7 +684,7 @@
                             type="text" id="pendidikan_ibu"
                             name="pendidikan_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('pendidikan_ibu') border-red-500 @enderror">
-                            <option value="">Pilih Pendidikan Ibu</option>
+                            <option value="" disabled selected>Pilih Pendidikan Ibu</option>
                             <option value="SD" {{ old('pendidikan_ibu') == 'SD' ? 'selected' : '' }}>SD</option>
                             <option value="SMP" {{ old('pendidikan_ibu') == 'SMP' ? 'selected' : '' }}>SMP</option>
                             <option value="SMA" {{ old('pendidikan_ibu') == 'SMA' ? 'selected' : '' }}>SMA</option>
@@ -709,7 +709,7 @@
                             id="pekerjaan_ibu"
                             name="pekerjaan_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('pekerjaan_ibu') border-red-500 @enderror">
-                            <option value="">Pilih Pekerjaan Ibu</option>
+                            <option value="" disabled selected>Pilih Pekerjaan Ibu</option>
                             <option value="Tidak Bekerja" {{ old('pekerjaan_ibu') == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
                             <option value="Petani" {{ old('pekerjaan_ibu') == 'Petani' ? 'selected' : '' }}>Petani</option>
                             <option value="Nelayan" {{ old('pekerjaan_ibu') == 'Nelayan' ? 'selected' : '' }}>Nelayan</option>
@@ -741,7 +741,7 @@
                             type="text" id="penghasilan_ibu"
                             name="penghasilan_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('penghasilan_ibu') border-red-500 @enderror">
-                            <option value="">Pilih Penghasilan Ibu</option>
+                            <option value="" disabled selected>Pilih Penghasilan Ibu</option>
                             <option value="Tidak Ada Penghasilan" {{ old('penghasilan_ibu') == 'Tidak Ada Penghasilan' ? 'selected' : '' }}>Tidak Ada Penghasilan</option>
                             <option value="0-1 juta" {{ old('penghasilan_ibu') == '0-1 juta' ? 'selected' : '' }}>0 - 1 Juta</option>
                             <option value="1-3 juta" {{ old('penghasilan_ibu') == '1-3 juta' ? 'selected' : '' }}>1 - 3 Juta</option>
@@ -759,10 +759,129 @@
                     </div>
 
 
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
+                </div>
+
+
+                <!-- Alamat Orangtua -->
+
+                <div class="step">
+
+                    <div class="px-6 py-3">
+                        <a class="block text-center items-center space-x-3 rtl:space-x-reverse bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Tempat Tinggal</a>
+                    </div>
+
                     <div class="mb-4">
-                        <button type="button" onclick="prevStep()">Back</button>
+                        <label for="status_milik" class="block text-lg font-medium text-gray-700">Status Kepemilikan</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Status Kepemilikan Rumah</small>
+                        <select
+                            value="{{ old('status_milik') }}"
+                            type="text"
+                            id="status_milik"
+                            name="status_milik"
+                            class="form-control w-full p-3 rounded-lg border @error('status_milik') border-red-500  @enderror">
+                            <option value="" disabled selected>Pilih</option>
+                            <option value="Milik Sendiri" {{ old('pendidikan_ayah') == 'Milik Sendiri' ? 'selected' : '' }}>Milik Sendiri</option>
+                            <option value="Rumah Orang Tua" {{ old('pendidikan_ayah') == 'Rumah Orang Tua' ? 'selected' : '' }}>Rumah Orang Tua</option>
+                            <option value="Rumah Kerabat" {{ old('pendidikan_ayah') == 'Rumah Kerabat' ? 'selected' : '' }}>Rumah Kerabat</option>
+                            <option value="Rumah Dinas" {{ old('pendidikan_ayah') == 'Rumah Dinas' ? 'selected' : '' }}>Rumah Dinas</option>
+                            <option value="Sewa atau Kontrak" {{ old('pendidikan_ayah') == 'Sewa atau Kontrak' ? 'selected' : '' }}>Sewa atau Kontrak</option>
+                        </select>
+
+                            <span class="error" id="statusMilikError"></span>
+                        @error('status_milik')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="alamat_rumah_tinggal" class="block text-lg font-medium text-gray-700">Alamat Rumah Tinggal</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Nama Jalan/Perumahan/Komplek</small>
+                        <input value="{{ old('alamat_rumah_tinggal') }}" type="text" id="alamat_rumah_tinggal" name="alamat_rumah_tinggal" placeholder="Alamat Rumah"
+                            class="form-control w-full p-3 rounded-lg border @error('alamat_rumah_tinggal') border-red-500  @enderror">
+                        <span class="error" id="alamatRumahTinggalError"></span>
+                        @error('alamat_rumah_tinggal')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4 flex space-x-4">
+                        <div class="w-1/2">
+                            <label for="rt" class="block text-lg font-medium text-gray-700">RT</label>
+                            <input value="{{ old('rt') }}" type="number" id="rt" name="rt"
+                                class="form-control w-full p-3 rounded-lg border @error('rt') border-red-500  @enderror">
+                            <span class="error" id="rtError"></span>
+                            @error('rt')
+                                <p class="text-sm text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="w-1/2">
+                            <label for="rw" class="block text-lg font-medium text-gray-700">RW</label>
+                            <input value="{{ old('rw') }}" type="number" id="rw" name="rw"
+                                class="form-control w-full p-3 rounded-lg border @error('rw') border-red-500  @enderror">
+                            <span class="error" id="rwError"></span>
+                            @error('rw')
+                                <p class="text-sm text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="desa" class="block text-lg font-medium text-gray-700">Desa</label>
+                        <input value="{{ old('desa') }}" type="text" id="desa" name="desa"
+                            class="form-control w-full p-3 rounded-lg border @error('desa') border-red-500  @enderror">
+                        <span class="error" id="desaError"></span>
+                        @error('desa')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="kecamatan" class="block text-lg font-medium text-gray-700">Kecamatan</label>
+                        <input value="{{ old('kecamatan') }}" type="text" id="kecamatan" name="kecamatan"
+                            class="form-control w-full p-3 rounded-lg border @error('kecamatan') border-red-500  @enderror">
+                        <span class="error" id="kecamatanError"></span>
+                        @error('kecamatan')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="kabupaten" class="block text-lg font-medium text-gray-700">Kabupaten</label>
+                        <input value="{{ old('kabupaten') }}" type="text" id="kabupaten" name="kabupaten"
+                            class="form-control w-full p-3 rounded-lg border @error('kabupaten') border-red-500  @enderror">
+                        <span class="error" id="kabupatenError"></span>
+                        @error('kabupaten')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="provinsi" class="block text-lg font-medium text-gray-700">Provinsi</label>
+                        <input value="{{ old('provinsi') }}" type="text" id="provinsi" name="provinsi"
+                            class="form-control w-full p-3 rounded-lg border @error('provinsi') border-red-500  @enderror">
+                        <span class="error" id="provinsiError"></span>
+                        @error('provinsi')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="kode_pos" class="block text-lg font-medium text-gray-700">Kode Pos</label>
+                        <input value="{{ old('kode_pos') }}" type="number" id="kode_pos" name="kode_pos"
+                            class="form-control w-full p-3 rounded-lg border @error('kode_pos') border-red-500  @enderror">
+                        <span class="error" id="kodePosError"></span>
+                        @error('kode_pos')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-500">
-                            Submit
+                            Kirim
                         </button>
                     </div>
                 </div>

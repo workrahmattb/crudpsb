@@ -379,6 +379,18 @@ class SantriResource extends Resource
                     ->label('Alamat')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('kecamatan')
+                    ->label('Alamat')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('kabupaten')
+                    ->label('Alamat')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('provinsi')
+                    ->label('Alamat')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

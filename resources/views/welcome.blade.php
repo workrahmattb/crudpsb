@@ -18,7 +18,7 @@
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             </a>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <a href="/products/create" class="bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Daftar</a>
+                <a href="/santris/create" class="bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Daftar</a>
                 <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
                 <span class="sr-only">Open main menu</span>
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
@@ -53,7 +53,7 @@
       <div class="container mx-auto flex flex-col items-center justify-center text-center py-14 px-6">
         <h1 class="text-4xl md:text-6xl font-bold mb-6">Welcome to <br/> Pondok Pesantren Syafa'aturrasul</h1>
         <p class="text-3xl md:text-3xl mb-8">Kuantan Singingi - Riau</p>
-        <a href="/products/create" class="bg-white text-2xl text-green-500 px-20 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100">Daftar</a>
+        <a href="/santris/create" class="bg-white text-2xl text-green-500 px-20 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100">Daftar</a>
       </div>
     </section>
 
@@ -63,62 +63,60 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            Product name
+                            ID
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Color
+                            Image
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Category
+                            Image2
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Sku
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Price
                         </th>
+                        <th scope="col" class="px-6 py-3">
+                            Created At
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
+                    @if ($products->isNotEmpty())
+                    @foreach ($products as $product)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Apple MacBook Pro 17"
+                            {{ $product->id }}
                         </th>
                         <td class="px-6 py-4">
-                            Silver
+                            @if ($product->image != "")
+                                    <img class="w-16 h-16 object-cover rounded-md" src="{{ asset('storage/' . $product->image) }}" alt="">
+                            @endif
                         </td>
                         <td class="px-6 py-4">
-                            Laptop
+                            @if ($product->image2 != "")
+                                    <img class="w-16 h-16 object-cover rounded-md" src="{{ asset('storage/' . $product->image2) }}" alt="">
+                            @endif
                         </td>
                         <td class="px-6 py-4">
-                            $2999
+                            {{ $product->name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $product->sku }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $product->price }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ \Carbon\Carbon::parse($product->created_at)->format('d M, Y') }}
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Microsoft Surface Pro
-                        </th>
-                        <td class="px-6 py-4">
-                            White
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop PC
-                        </td>
-                        <td class="px-6 py-4">
-                            $1999
-                        </td>
-                    </tr>
-                    <tr class="bg-white dark:bg-gray-800">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Magic Mouse 2
-                        </th>
-                        <td class="px-6 py-4">
-                            Black
-                        </td>
-                        <td class="px-6 py-4">
-                            Accessories
-                        </td>
-                        <td class="px-6 py-4">
-                            $99
-                        </td>
-                    </tr>
+                    @endforeach
+                @endif
                 </tbody>
             </table>
         </div>
