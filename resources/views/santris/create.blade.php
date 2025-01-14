@@ -1,9 +1,10 @@
 <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simple Laravel 11 CRUD</title>
+    <title>Daftar Ulang PPSR</title>
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@1.5.4/dist/flowbite.min.css" rel="stylesheet">
     @vite(['resources/css/app.css','resources/js/app.js'])
@@ -54,18 +55,20 @@
       </header>
 
       <section class="bg-green-500 text-white">
-        <div class="container mx-auto flex flex-col items-center justify-center text-center py-12 px-2">
+        <div class="container mx-auto flex flex-col items-center justify-center text-center py-20 px-6">
           <h1 class="text-4xl md:text-6xl font-bold mb-6">Welcome to <br/> Pondok Pesantren Syafa'aturrasul</h1>
-          <p class="text-lg md:text-xl mb-8">Mohon diisi Formulir Daftar Ulang</p>
+          <p class="text-lg md:text-xl mb-8">Formulir Daftar Ulang Santri/Wari Ponpes Syafa'aturrasul  TA 2025/2026</p>
+
         </div>
       </section>
 
       <div class="container mx-auto my-4">
+
         <div class="flex justify-center">
             <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg">
 
                 <div class="bg-green-500 p-4 rounded-t-lg">
-                    <h3 class="text-white text-xl">Daftar Ulang Santri/wati Baru Tahun Ajaran 2025/2026</h3>
+                    <h3 class="text-white text-xl">Daftar Ulang</h3>
                 </div>
 
                 @if (Session::has('error_message'))
@@ -80,9 +83,19 @@
                 <form enctype="multipart/form-data" action="{{ route('santris.store') }}" method="post" class="p-4">
                     @csrf
 
-
-                    <!-- ini untuk percobaan -->
+                    <!-- Data Anak -->
                 <div class="step active">
+
+                    <div class="mb-4">
+                        <label for="nisn" class="block text-lg font-medium text-gray-700">NISN</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Induk Siswa Nasional</small>
+                        <input value="{{ old('nisn') }}" type="number" id="nisn" name="nisn"
+                            class="form-control w-full p-3 rounded-lg border @error('nisn') border-red-500  @enderror">
+                        @error('nisn')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class="mb-4">
                         <label for="nama" class="block text-lg font-medium text-gray-700">Nama Santri/wati</label>
                         <small class="text-sm text-gray-500 italic mt-1">Nama Lengkap Sesuai Ijazah</small>
@@ -111,10 +124,11 @@
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+
                     <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
 
-                <!-- end step 1 -->
+                <!-- end Data Anak -->
 
 
                 <!-- start step 2 -->
@@ -122,7 +136,14 @@
                     <div class="mb-4">
                         <label for="nik" class="block text-lg font-medium text-gray-700">Nomor NIK</label>
                         <small class="text-sm text-gray-500 italic mt-1">Nomor Induk Kependudukan Anak</small>
-                        <input value="{{ old('nik') }}" type="number" id="nik" name="nik"
+                        <input
+                            value="{{ old('nik') }}"
+                            type="number"
+                            id="nik"
+                            name="nik"
+                            maxlength="16"
+                            pattern="\d{16}"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('nik') border-red-500  @enderror">
                         @error('nik')
                             <p class="text-sm text-red-500">{{ $message }}</p>
@@ -132,7 +153,14 @@
                     <div class="mb-4">
                         <label for="kk" class="block text-lg font-medium text-gray-700">Nomor KK</label>
                         <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Keluarga</small>
-                        <input value="{{ old('kk') }}" type="number" id="kk" name="kk"
+                        <input
+                            value="{{ old('kk') }}"
+                            type="number"
+                            id="kk"
+                            name="kk"
+                            maxlength="16"
+                            pattern="\d{16}"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('kk') border-red-500  @enderror">
                         @error('kk')
                             <p class="text-sm text-red-500">{{ $message }}</p>
@@ -149,114 +177,44 @@
                         @enderror
                     </div>
 
-                    <div class="mb-4">
-                        <label for="nisn" class="block text-lg font-medium text-gray-700">NISN</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor Induk Siswa Nasional *Wajid diisi</small>
-                        <input value="{{ old('nisn') }}" type="number" id="nisn" name="nisn"
-                            class="form-control w-full p-3 rounded-lg border @error('nisn') border-red-500  @enderror">
-                        @error('nisn')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+
+
+                    <div class="mb-4 flex space-x-4">
+                        <div class="w-1/2">
+                            <label for="anak_ke" class="block text-lg font-medium text-gray-700">Anak Ke</label>
+                            <small class="text-sm text-gray-500 italic mt-1">Nomor urut anak</small>
+                            <input
+                                value="{{ old('anak_ke') }}"
+                                type="number"
+                                id="anak_ke"
+                                name="anak_ke"
+
+                                class="form-control w-full p-3 rounded-lg border @error('anak_ke') border-red-500 @enderror">
+                            @error('anak_ke')
+                                <p class="text-sm text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="w-1/2">
+                            <label for="jumlah_saudara" class="block text-lg font-medium text-gray-700">Jumlah Saudara</label>
+                            <small class="text-sm text-gray-500 italic mt-1">Total jumlah saudara kandung</small>
+                            <input
+                                value="{{ old('jumlah_saudara') }}"
+                                type="number"
+                                id="jumlah_saudara"
+                                name="jumlah_saudara"
+
+                                class="form-control w-full p-3 rounded-lg border @error('jumlah_saudara') border-red-500 @enderror">
+                            @error('jumlah_saudara')
+                                <p class="text-sm text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
 
-
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
-                </div>
-                    <!-- end step 2 -->
-
-
-                    <!-- step finish -->
-                <div class="step">
                     <div class="mb-4">
-                        <label for="tk" class="block text-lg font-medium text-gray-700">TK</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Pernah Ikut Taman Kanak-Kanak?</small>
-                        <select
-                            value="{{ old('tk') }}"
-                            type="text" id="tk"
-                            name="tk"
-
-                            class="form-control w-full p-3 rounded-lg border @error('tk') border-red-500  @enderror">
-                            <option value="" disabled selected>Pilih</option>
-                            <option value="ya" {{ old('tk') == 'ya' ? 'selected' : '' }}>Iya</option>
-                            <option value="tidak" {{ old('tk') == 'tidak' ? 'selected' : '' }}>Tidak</option>
-                        </select>
-                        @error('tk')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="paud" class="block text-lg font-medium text-gray-700">PAUD</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Pernah Ikut Pendidikan Anak Usia Dini?</small>
-                        <select
-                            value="{{ old('paud') }}"
-                            type="text"
-                            id="paud"
-                            name="paud"
-
-                            class="form-control w-full p-3 rounded-lg border @error('paud') border-red-500  @enderror">
-                            <option value="" disabled selected>Pilih</option>
-                            <option value="ya" {{ old('paud') == 'ya' ? 'selected' : '' }}>Iya</option>
-                            <option value="tidak" {{ old('paud') == 'tidak' ? 'selected' : '' }}>Tidak</option>
-                        </select>
-                        @error('paud')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="hobi" class="block text-lg font-medium text-gray-700">Hobi</label>
-                        <input value="{{ old('hobi') }}" type="text" id="hobi" name="hobi"
-                            class="form-control w-full p-3 rounded-lg border @error('hobi') border-red-500  @enderror">
-                        @error('hobi')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="cita_cita" class="block text-lg font-medium text-gray-700">Cita-cita</label>
-                        <input value="{{ old('cita_cita') }}" type="text" id="cita_cita" name="cita_cita"
-                            class="form-control w-full p-3 rounded-lg border @error('cita_cita') border-red-500  @enderror">
-                        @error('cita_cita')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="anak_ke" class="block text-lg font-medium text-gray-700">Anak Ke</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor urut anak</small>
-                        <input
-                            value="{{ old('anak_ke') }}"
-                            type="number"
-                            id="anak_ke"
-                            name="anak_ke"
-
-                            class="form-control w-full p-3 rounded-lg border @error('anak_ke') border-red-500 @enderror">
-                        @error('anak_ke')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="jumlah_saudara" class="block text-lg font-medium text-gray-700">Jumlah Saudara</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Total jumlah saudara kandung</small>
-                        <input
-                            value="{{ old('jumlah_saudara') }}"
-                            type="number"
-                            id="jumlah_saudara"
-                            name="jumlah_saudara"
-
-                            class="form-control w-full p-3 rounded-lg border @error('jumlah_saudara') border-red-500 @enderror">
-                        @error('jumlah_saudara')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="kks" class="block text-lg font-medium text-gray-700">KKS</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Keluarga Sejahtera (Diisi bagi yang punya)</small>
+                        <label for="kks" class="block text-lg font-medium text-gray-700">Nomor KKS</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Keluarga Sejahtera (Opsional)</small>
                         <input
                             value="{{ old('kks') }}"
                             type="number"
@@ -270,8 +228,8 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="pkh" class="block text-lg font-medium text-gray-700">PKH</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor Program Keluarga Harapan (Diisi bagi yang punya)</small>
+                        <label for="pkh" class="block text-lg font-medium text-gray-700">Nomor PKH</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Program Keluarga Harapan (Opsional)</small>
                         <input
                             value="{{ old('pkh') }}"
                             type="number"
@@ -285,8 +243,8 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="kip" class="block text-lg font-medium text-gray-700">KIP</label>
-                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Indonesia Pintar (Diisi bagi yang punya)</small>
+                        <label for="kip" class="block text-lg font-medium text-gray-700">Nomor KIP</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Kartu Indonesia Pintar (Opsional)</small>
                         <input
                             value="{{ old('kip') }}"
                             type="number"
@@ -300,17 +258,19 @@
                     </div>
 
 
+
                     <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
                     <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
-
-                <!-- end step 2 -->
-
-
-                <!-- step selanjutnya -->
+                    <!-- end step 2 -->
 
 
+                    <!-- Data Sekolah -->
                 <div class="step">
+
+                    <div class="px-6 py-3">
+                        <a class="block text-center items-center space-x-3 rtl:space-x-reverse bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Data Sekolah Sebelumnya</a>
+                    </div>
 
                     <div class="mb-4">
                         <label for="jenjang_pendidikan_sebelumnya" class="block text-lg font-medium text-gray-700">Jenjang Pendidikan Sebelumnya</label>
@@ -444,9 +404,12 @@
                     </div>
 
 
+
                     <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
                     <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
+
+
 
                 <div class="step">
                     <div class="px-6 py-3">
@@ -454,7 +417,14 @@
                     </div>
                     <div class="mb-4">
                         <label for="nik_ayah" class="block text-lg font-medium text-gray-700">NIK Ayah</label>
-                        <input value="{{ old('nik_ayah') }}" type="number" id="nik_ayah" name="nik_ayah"
+                        <input
+                            value="{{ old('nik_ayah') }}"
+                            type="number"
+                            id="nik_ayah"
+                            name="nik_ayah"
+                            maxlength="16"
+                            pattern="\d{16}"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('nik_ayah') border-red-500 @enderror">
                         <span class="error" id="nikAyahError"></span>
                         @error('nik_ayah')
@@ -610,7 +580,14 @@
                     <!-- For Ibu's information -->
                     <div class="mb-4">
                         <label for="nik_ibu" class="block text-lg font-medium text-gray-700">NIK Ibu</label>
-                        <input value="{{ old('nik_ibu') }}" type="number" id="nik_ibu" name="nik_ibu"
+                        <input
+                            value="{{ old('nik_ibu') }}"
+                            type="number"
+                            id="nik_ibu"
+                            name="nik_ibu"
+                            maxlength="16"
+                            pattern="\d{16}"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('nik_ibu') border-red-500 @enderror">
                         <span class="error" id="nikIbuError"></span>
                         @error('nik_ibu')
@@ -669,7 +646,7 @@
 
                     <div class="mb-4">
                         <label for="no_hp_ibu" class="block text-lg font-medium text-gray-700">No. HP Ibu</label>
-                        <input value="{{ old('no_hp_ibu') }}" type="number" id="no_hp_ibu" name="no_hp_ibu" placeholder="No. HP Ibu"
+                        <input value="{{ old('no_hp_ibu') }}" type="number" id="no_hp_ibu" name="no_hp_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('no_hp_ibu') border-red-500 @enderror">
                         <span class="error" id="noHpIbuError"></span>
                         @error('no_hp_ibu')
@@ -762,9 +739,6 @@
                     <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
                     <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
                 </div>
-
-
-                <!-- Alamat Orangtua -->
 
                 <div class="step">
 
@@ -878,12 +852,15 @@
                         @enderror
                     </div>
 
+
                     <div class="mb-4">
                         <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
+
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-500">
                             Kirim
                         </button>
                     </div>
+
                 </div>
 
 

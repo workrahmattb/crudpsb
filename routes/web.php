@@ -4,9 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\PendaftaranController;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
+
+Route::controller(PendaftaranController::class)->group(function () {
+    Route::get('/pendaftarans', 'index')->name('pendaftarans.index');
+    Route::get('/pendaftarans/create', 'create')->name('pendaftarans.create');
+
+    Route::post('/pendaftarans', 'store')->name('pendaftarans.store');
+
+});
 
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index')->name('products.index');

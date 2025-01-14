@@ -64,66 +64,146 @@
 
         <div class="flex justify-center">
             <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg">
-                <div class="bg-gray-800 p-4 rounded-t-lg">
+                <div class="bg-green-500 p-4 rounded-t-lg">
                     <h3 class="text-white text-xl">Create Product</h3>
                 </div>
                 <form enctype="multipart/form-data" action="{{ route('pendaftarans.store') }}" method="post" class="p-4">
                     @csrf
+                    <!-- NISN -->
                     <div class="mb-4">
-                        <label for="nisn" class="block text-lg font-medium text-gray-700">NISN (Nomor Induk Siswa Nasional)</label>
-                        <input value="{{ old('nisn') }}" type="nisn" id="nisn" name="nisn"
-                            class="form-control w-full p-3 rounded-lg border @error('name') border-red-500  @enderror">
-                        @error('nama')
+                        <label for="nisn" class="block text-lg font-medium text-gray-700">NISN</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Nomor Induk Siswa Nasional</small>
+                        <input value="{{ old('nisn') }}" type="number" id="nisn" name="nisn"
+                            class="form-control w-full p-3 rounded-lg border @error('nisn') border-red-500 @enderror">
+                        @error('nisn')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
+                    <!-- Nama -->
                     <div class="mb-4">
-                        <label for="name" class="block text-lg font-medium text-gray-700">Nama</label>
+                        <label for="nama" class="block text-lg font-medium text-gray-700">Nama</label>
                         <input value="{{ old('nama') }}" type="text" id="nama" name="nama"
-                            class="form-control w-full p-3 rounded-lg border @error('name') border-red-500  @enderror">
+                            class="form-control w-full p-3 rounded-lg border @error('nama') border-red-500 @enderror">
                         @error('nama')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
+                    <!-- Jenjang Pendidikan -->
                     <div class="mb-4">
-                        <label for="sku" class="block text-lg font-medium text-gray-700">Sku</label>
-                        <input value="{{ old('sku') }}" type="text" id="sku" name="sku" placeholder="Sku"
-                            class="form-control w-full p-3 rounded-lg border @error('sku') border-red-500 @enderror">
-                        @error('sku')
+                        <label for="jenjangpendidikan" class="block text-lg font-medium text-gray-700">Jenjang Pendidikan Yang Dituju</label>
+                        <small class="text-sm text-gray-500 italic mt-1">MTs Putra/Putri & MA Putra/Putri</small>
+                        <select
+                            value="{{ old('jenjangpendidikan') }}"
+                            type="text"
+                            id="jenjangpendidikan"
+                            name="jenjangpendidikan"
+
+                            class="form-control w-full p-3 rounded-lg border @error('jenjangpendidikan') border-red-500 @enderror">
+                            <option value="" disabled selected>Pilih Jenjang Pendidikan</option>
+                            <option value="MTs Putri Syafa\'aturrasul (Perempuan)" {{ old('jenjangpendidikan') == 'MTs Putri Syafa\'aturrasul (Perempuan)' ? 'selected' : '' }}>MTs Putri Syafa'aturrasul (Perempuan)</option>
+                            <option value="MTs Putra Syafa\'aturrasul (Laki-Laki)" {{ old('jenjangpendidikan') == 'MTs Putra Syafa\'aturrasul (Laki-Laki)' ? 'selected' : '' }}>MTs Putra Syafa'aturrasul (Laki-Laki)</option>
+                            <option value="MA Putri Syafa\'aturrasul (Perempuan)" {{ old('jenjangpendidikan') == 'MA Putri Syafa\'aturrasul (Perempuan)' ? 'selected' : '' }}>MA Putri Syafa'aturrasul (Perempuan)</option>
+                            <option value="MA Putra Syafa\'aturrasul (Laki-Laki)" {{ old('jenjangpendidikan') == 'MA Putra Syafa\'aturrasul (Laki-Laki)' ? 'selected' : '' }}>MA Putra Syafa'aturrasul (Laki-Laki)</option>
+
+                        </select>
+
+
+                        <span class="error" id="jenjangpendidikanError"></span>
+                        @error('jenjangpendidikan')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+
+
+                    <!-- Alamat -->
+                    <div class="mb-4">
+                        <label for="alamat" class="block text-lg font-medium text-gray-700">Alamat</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Alamat Lengkap, Contoh : Desa Kopah, Kec.Kuantan Tengah, Kab.Kuantan Singingi, Riau</small>
+                        <textarea id="alamat" name="alamat"
+                            class="form-control w-full p-3 rounded-lg border @error('alamat') border-red-500 @enderror">{{ old('alamat') }}</textarea>
+                        @error('alamat')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Sekolah Asal -->
+                    <div class="mb-4">
+                        <label for="sekolahasal" class="block text-lg font-medium text-gray-700">Sekolah Asal</label>
+                        <small class="text-sm text-gray-500 italic mt-1">Contoh : SDN 01 Teluk Kuantan</small>
+                        <input value="{{ old('sekolahasal') }}" type="text" id="sekolahasal" name="sekolahasal"
+                            class="form-control w-full p-3 rounded-lg border @error('sekolahasal') border-red-500 @enderror">
+                        @error('sekolahasal')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Tempat Lahir -->
+                    <div class="mb-4">
+                        <label for="tempat_lahir" class="block text-lg font-medium text-gray-700">Tempat Lahir</label>
+                        <input value="{{ old('tempat_lahir') }}" type="text" id="tempat_lahir" name="tempat_lahir"
+                            class="form-control w-full p-3 rounded-lg border @error('tempat_lahir') border-red-500 @enderror">
+                        @error('tempat_lahir')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Tanggal Lahir -->
+                    <div class="mb-4">
+                        <label for="tanggal_lahir" class="block text-lg font-medium text-gray-700">Tanggal Lahir</label>
+                        <input value="{{ old('tanggal_lahir') }}" type="date" id="tanggal_lahir" name="tanggal_lahir"
+                            class="form-control w-full p-3 rounded-lg border @error('tanggal_lahir') border-red-500 @enderror">
+                        @error('tanggal_lahir')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Nama Ayah -->
+                    <div class="mb-4">
+                        <label for="nama_ayah" class="block text-lg font-medium text-gray-700">Nama Ayah</label>
+                        <input value="{{ old('nama_ayah') }}" type="text" id="nama_ayah" name="nama_ayah"
+                            class="form-control w-full p-3 rounded-lg border @error('nama_ayah') border-red-500 @enderror">
+                        @error('nama_ayah')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Nama Ibu -->
+                    <div class="mb-4">
+                        <label for="nama_ibu" class="block text-lg font-medium text-gray-700">Nama Ibu</label>
+                        <input value="{{ old('nama_ibu') }}" type="text" id="nama_ibu" name="nama_ibu"
+                            class="form-control w-full p-3 rounded-lg border @error('nama_ibu') border-red-500 @enderror">
+                        @error('nama_ibu')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Nama Wali -->
+                    <div class="mb-4">
+                        <label for="nama_wali" class="block text-lg font-medium text-gray-700">Nama Wali</label>
+                        <input value="{{ old('nama_wali') }}" type="text" id="nama_wali" name="nama_wali"
+                            class="form-control w-full p-3 rounded-lg border @error('nama_wali') border-red-500 @enderror">
+                        @error('nama_wali')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- No HP -->
+                    <div class="mb-4">
+                        <label for="nohp" class="block text-lg font-medium text-gray-700">Nomor HP</label>
+                        <input value="{{ old('nohp') }}" type="number" id="nohp" name="nohp"
+                            class="form-control w-full p-3 rounded-lg border @error('nohp') border-red-500 @enderror">
+                        @error('nohp')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div class="mb-4">
-                        <label for="price" class="block text-lg font-medium text-gray-700">Price</label>
-                        <input value="{{ old('price') }}" type="text" id="price" name="price" placeholder="Price"
-                            class="form-control w-full p-3 rounded-lg border @error('price') border-red-500 @enderror">
-                        @error('price')
-                            <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="description" class="block text-lg font-medium text-gray-700">Description</label>
-                        <textarea id="description" name="description" placeholder="Description"
-                            class="form-control w-full p-3 rounded-lg border @error('description') border-red-500 @enderror"
-                            rows="5">{{ old('description') }}</textarea>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="image" class="block text-lg font-medium text-gray-700">Image</label>
-                        <input type="file" id="image" name="image" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                    @error('image')
-                        <p class="text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="image2" class="block text-lg font-medium text-gray-700">Image2</label>
-                        <input type="file" id="image2" name="image2" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                    @error('image2')
+                        <label for="buktitransfer" class="block text-lg font-medium text-gray-700">Bukti Transfer</label>
+                        <input type="file" id="buktitransfer" name="buktitransfer" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                    @error('buktitransfer')
                         <p class="text-sm text-red-500">{{ $message }}</p>
                     @enderror
                     </div>
@@ -138,7 +218,7 @@
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-white py-6">
+    <footer class="bg-green-500 text-white py-6">
         <div class="container mx-auto text-center">
           <p>Ponpes Syafa'aturrasul Kuantan Singingi 2025</p>
         </div>

@@ -12,28 +12,25 @@ class PendaftaranController extends Controller
     // This method will show Pendaftarans page
     public function index()
     {
-        $Pendaftarans = Pendaftaran::orderBy('created_at', 'DESC')->paginate(3);
-
-        return view('Pendaftarans.list', [
-            'Pendaftarans' => $Pendaftarans
-        ]);
+        $pendaftarans = Pendaftaran::orderBy('created_at', 'DESC')->paginate(50);
+        return view('welcome', compact('pendaftarans'));
     }
 
     // This method will show create Pendaftaran page
     public function create()
     {
-        return view('Pendaftarans.create');
+        return view('pendaftarans.create');
     }
 
     // This method will store a Pendaftaran in db
     public function store(Request $request)
     {
-        $rules = [
-            'name' => 'required|min:5',
-            'sku' => 'required|min:3',
-            'price' => 'required|numeric',
+        //$rules = [
+            //'name' => 'required|min:5',
+            //'sku' => 'required|min:3',
+            //'price' => 'required|numeric',
 
-        ];
+        //];
 
         //if ($request->image != "") {
         //    $rules['image'] = 'image';
@@ -127,7 +124,7 @@ class PendaftaranController extends Controller
             $Pendaftaran->save();
         }
 
-        return redirect()->route('Pendaftarans.index')->with('success', 'Pendaftaran added successfully.');
+        return redirect()->route('pendaftarans.index')->with('success', 'Pendaftaran added successfully.');
     }
 
     // This method will show edit Pendaftaran page

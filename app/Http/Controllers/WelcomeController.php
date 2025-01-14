@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Pendaftaran;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,7 +11,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $products = Product::all(); // Ambil semua data produk
-        return view('welcome', compact('products'));
+        $pendaftarans = Pendaftaran::orderBy('created_at', 'DESC')->paginate(50);
+        return view('welcome', compact('pendaftarans'));
     }
 }

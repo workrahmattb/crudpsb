@@ -22,4 +22,5 @@ class Pendaftaran extends Model
         'nama_wali',
         'nohp',
         'buktitransfer',
+    ];
 }
