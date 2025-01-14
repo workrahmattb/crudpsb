@@ -50,30 +50,48 @@
       </header>
 
       <section class="bg-green-500 text-white">
-        <div class="container mx-auto flex flex-col items-center justify-center text-center py-20 px-6">
+        <div class="container mx-auto flex flex-col items-center justify-center text-left py-20 px-6">
           <h1 class="text-4xl md:text-6xl font-bold mb-6">Welcome to <br/> Pondok Pesantren Syafa'aturrasul</h1>
-          <p class="text-lg md:text-xl mb-8">We provide the best solutions for your business needs.</p>
-          <a href="/pendaftarans/create" class="bg-white text-green-500 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100">Daftar</a>
+          <p class="sm:text-left md:text-center lg:text-right">Langkah mengisi formulir :
+                <br/> 1. Membayar Uang Formulir Rp. 200.000 Transfer Ke Bank Riau Kepri Syariah 8253122288  a.n Pondok Pesantren Syafa'aturrasul
+                <br/> 2. Simpan bukti transfer untuk di upload di form isian data Santriwati baru
+                <br/> 3. Isi form dibawah ini dengan Data yang benar
+              </p>
         </div>
+
+
+
       </section>
 
     <div class="container mx-auto my-4">
-        <div class="flex justify-end mb-4">
-            <a href="{{ route('pendaftarans.index') }}" class="btn btn-dark text-white bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600">Back</a>
-        </div>
 
+                            @if (Session::has('error_message'))
+                            <div class="mb-4">
+                                <div class="bg-red-100 border border-red-400 text-black-700 px-4 py-3 rounded relative" role="alert">
+                                    {{ Session::get('error_message') }}
+                                </div>
+                            </div>
+                            @endif
         <div class="flex justify-center">
             <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg">
                 <div class="bg-green-500 p-4 rounded-t-lg">
-                    <h3 class="text-white text-xl">Create Product</h3>
+                    <h3 class="text-white text-xl">Isi Data Daftar PSB</h3>
                 </div>
+
                 <form enctype="multipart/form-data" action="{{ route('pendaftarans.store') }}" method="post" class="p-4">
                     @csrf
                     <!-- NISN -->
                     <div class="mb-4">
                         <label for="nisn" class="block text-lg font-medium text-gray-700">NISN</label>
                         <small class="text-sm text-gray-500 italic mt-1">Nomor Induk Siswa Nasional</small>
-                        <input value="{{ old('nisn') }}" type="number" id="nisn" name="nisn"
+                        <input
+                            value="{{ old('nisn') }}"
+                            type="number"
+                            id="nisn"
+                            name="nisn"
+                            maxlength="10"
+                            pattern="\d{10}"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 10);"
                             class="form-control w-full p-3 rounded-lg border @error('nisn') border-red-500 @enderror">
                         @error('nisn')
                             <p class="text-sm text-red-500">{{ $message }}</p>
@@ -99,15 +117,26 @@
                             type="text"
                             id="jenjangpendidikan"
                             name="jenjangpendidikan"
-
                             class="form-control w-full p-3 rounded-lg border @error('jenjangpendidikan') border-red-500 @enderror">
                             <option value="" disabled selected>Pilih Jenjang Pendidikan</option>
-                            <option value="MTs Putri Syafa\'aturrasul (Perempuan)" {{ old('jenjangpendidikan') == 'MTs Putri Syafa\'aturrasul (Perempuan)' ? 'selected' : '' }}>MTs Putri Syafa'aturrasul (Perempuan)</option>
-                            <option value="MTs Putra Syafa\'aturrasul (Laki-Laki)" {{ old('jenjangpendidikan') == 'MTs Putra Syafa\'aturrasul (Laki-Laki)' ? 'selected' : '' }}>MTs Putra Syafa'aturrasul (Laki-Laki)</option>
-                            <option value="MA Putri Syafa\'aturrasul (Perempuan)" {{ old('jenjangpendidikan') == 'MA Putri Syafa\'aturrasul (Perempuan)' ? 'selected' : '' }}>MA Putri Syafa'aturrasul (Perempuan)</option>
-                            <option value="MA Putra Syafa\'aturrasul (Laki-Laki)" {{ old('jenjangpendidikan') == 'MA Putra Syafa\'aturrasul (Laki-Laki)' ? 'selected' : '' }}>MA Putra Syafa'aturrasul (Laki-Laki)</option>
-
+                            <option value="MTs Putri Syafa'aturrasul (Perempuan)"
+                                {{ old('jenjangpendidikan') == "MTs Putri Syafa'aturrasul (Perempuan)" ? 'selected' : '' }}>
+                                MTs Putri Syafa'aturrasul (Perempuan)
+                            </option>
+                            <option value="MTs Putra Syafa'aturrasul (Laki-Laki)"
+                                {{ old('jenjangpendidikan') == "MTs Putra Syafa'aturrasul (Laki-Laki)" ? 'selected' : '' }}>
+                                MTs Putra Syafa'aturrasul (Laki-Laki)
+                            </option>
+                            <option value="MA Putri Syafa'aturrasul (Perempuan)"
+                                {{ old('jenjangpendidikan') == "MA Putri Syafa'aturrasul (Perempuan)" ? 'selected' : '' }}>
+                                MA Putri Syafa'aturrasul (Perempuan)
+                            </option>
+                            <option value="MA Putra Syafa'aturrasul (Laki-Laki)"
+                                {{ old('jenjangpendidikan') == "MA Putra Syafa'aturrasul (Laki-Laki)" ? 'selected' : '' }}>
+                                MA Putra Syafa'aturrasul (Laki-Laki)
+                            </option>
                         </select>
+
 
 
                         <span class="error" id="jenjangpendidikanError"></span>
@@ -192,7 +221,7 @@
 
                     <!-- No HP -->
                     <div class="mb-4">
-                        <label for="nohp" class="block text-lg font-medium text-gray-700">Nomor HP</label>
+                        <label for="nohp" class="block text-lg font-medium text-gray-700">Nomor HP/ Whatsapp</label>
                         <input value="{{ old('nohp') }}" type="number" id="nohp" name="nohp"
                             class="form-control w-full p-3 rounded-lg border @error('nohp') border-red-500 @enderror">
                         @error('nohp')
@@ -202,15 +231,21 @@
 
                     <div class="mb-4">
                         <label for="buktitransfer" class="block text-lg font-medium text-gray-700">Bukti Transfer</label>
-                        <input type="file" id="buktitransfer" name="buktitransfer" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                        <small class="text-sm text-gray-500 italic mt-1">Upload Bukti Transfer</small>
+                        <input
+                            type="file"
+                            id="buktitransfer"
+
+                            name="buktitransfer"
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                     @error('buktitransfer')
                         <p class="text-sm text-red-500">{{ $message }}</p>
                     @enderror
                     </div>
 
                     <div class="mb-4">
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-500">
-                            Submit
+                        <button type="submit" class="w-full bg-green-800 text-white py-3 rounded-lg hover:bg-blue-500">
+                            Kirim
                         </button>
                     </div>
                 </form>

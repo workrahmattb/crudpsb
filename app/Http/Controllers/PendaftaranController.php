@@ -25,20 +25,6 @@ class PendaftaranController extends Controller
     // This method will store a Pendaftaran in db
     public function store(Request $request)
     {
-        //$rules = [
-            //'name' => 'required|min:5',
-            //'sku' => 'required|min:3',
-            //'price' => 'required|numeric',
-
-        //];
-
-        //if ($request->image != "") {
-        //    $rules['image'] = 'image';
-        //}
-
-        //if ($request->image2 != "") {
-        //    $rules['image2'] = 'image2';
-        //}
 
         $validator = Validator::make($request->all(), [
             'nisn' => 'required|string|max:255',
@@ -74,8 +60,13 @@ class PendaftaranController extends Controller
     ]);
 
 
+
         if ($validator->fails()) {
-            return redirect()->route('Pendaftarans.create')->withInput()->withErrors($validator);
+            return redirect()
+            ->route('pendaftarans.create')
+            ->withInput()
+            ->withErrors($validator)
+            ->with('error_message', 'Pendaftaran belum berhasil, Silakan periksa kembali data yang dimasukkan.');
         }
 
         // here we will insert Pendaftaran in db
@@ -95,6 +86,8 @@ class PendaftaranController extends Controller
         $Pendaftaran->buktitransfer = $request->buktitransfer;
         $Pendaftaran->save();
 
+        $nama = $Pendaftaran->nama;
+
         if ($request->buktitransfer != "") {
             // here we will store buktitransfer
             $buktitransfer = $request->buktitransfer;
@@ -109,95 +102,29 @@ class PendaftaranController extends Controller
             $Pendaftaran->save();
         }
 
-        //buktitransfer2
-        if ($request->image2 != "") {
-            // here we will store image
-            $image2 = $request->image2;
-            $ext2 = $image2->getClientOriginalExtension();
-            $image2Name = uniqid() . '_' . time() . '.' . $ext2; // Unique image name
 
-            // Save image to Pendaftarans directory
-            $image2->move(public_path('storage/'), $image2Name);
 
-            // Save image name in database
-            $Pendaftaran->image2 = $image2Name;
-            $Pendaftaran->save();
-        }
-
-        return redirect()->route('pendaftarans.index')->with('success', 'Pendaftaran added successfully.');
+        return redirect()->route('pendaftarans.index')
+                ->with('success', 'Pendaftaran Berhasil')
+                ->with('nama', $Pendaftaran->nama);
     }
 
     // This method will show edit Pendaftaran page
     public function edit($id)
     {
-        $Pendaftaran = Pendaftaran::findOrFail($id);
-        return view('Pendaftarans.edit', [
-            'Pendaftaran' => $Pendaftaran
-        ]);
+
     }
 
     // This method will update a Pendaftaran
     public function update($id, Request $request)
     {
 
-        $Pendaftaran = Pendaftaran::findOrFail($id);
 
-        $rules = [
-            'name' => 'required|min:5',
-            'sku' => 'required|min:3',
-            'price' => 'required|numeric'
-        ];
-
-        if ($request->image != "") {
-            $rules['image'] = 'image';
-        }
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect()->route('Pendaftarans.edit', $Pendaftaran->id)->withInput()->withErrors($validator);
-        }
-
-        // here we will update Pendaftaran
-        $Pendaftaran->name = $request->name;
-        $Pendaftaran->sku = $request->sku;
-        $Pendaftaran->price = $request->price;
-        $Pendaftaran->description = $request->description;
-        $Pendaftaran->save();
-
-        if ($request->image != "") {
-
-            // delete old image
-            File::delete(public_path('storage/' . $Pendaftaran->image));
-
-            // here we will store image
-            $image = $request->image;
-            $ext = $image->getClientOriginalExtension();
-            $imageName = time() . '.' . $ext; // Unique image name
-
-            // Save image to Pendaftarans directory
-            $image->move(public_path('storage/'), $imageName);
-
-            // Save image name in database
-            $Pendaftaran->image = $imageName;
-            $Pendaftaran->save();
-        }
-
-        return redirect()->route('Pendaftarans.index')->with('success', 'Pendaftaran updated successfully.');
     }
 
     // This method will delete a Pendaftaran
     public function destroy($id)
     {
-        $Pendaftaran = Pendaftaran::findOrFail($id);
 
-        // delete image
-        File::delete(public_path('storage/' . $Pendaftaran->image));
-        File::delete(public_path('storage/' . $Pendaftaran->image2));
-
-        // delete Pendaftaran from database
-        $Pendaftaran->delete();
-
-        return redirect()->route('Pendaftarans.index')->with('success', 'Pendaftaran deleted successfully.');
     }
 }

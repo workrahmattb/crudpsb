@@ -5,6 +5,8 @@ use App\Http\Controllers\SantriController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\MtsputriController;
+
 
 Route::get('/', [WelcomeController::class, 'index']);
 
@@ -34,4 +36,13 @@ Route::controller(SantriController::class)->group(function () {
     Route::get('/santris/{santri}/edit', 'edit')->name('santris.edit');
     Route::put('/santris/{santri}', 'update')->name('santris.update');
     Route::delete('/santris/{santri}', 'destroy')->name('santris.destroy');
+});
+
+Route::controller(MtsputriController::class)->group(function () {
+    Route::get('/mtsputris', 'index')->name('mtsputris.index');
+    Route::get('/mtsputris/create', 'create')->name('mtsputris.create');
+    Route::post('/mtsputris', 'store')->name('mtsputris.store');
+    Route::get('/mtsputris/{santri}/edit', 'edit')->name('mtsputris.edit');
+    Route::put('/mtsputris/{santri}', 'update')->name('mtsputris.update');
+    Route::delete('/mtsputris/{santri}', 'destroy')->name('mtsputris.destroy');
 });
