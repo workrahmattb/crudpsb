@@ -5,6 +5,7 @@ use App\Http\Controllers\SantriController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\MtsputriController;
 
 
@@ -14,8 +15,14 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::controller(PendaftaranController::class)->group(function () {
     Route::get('/pendaftarans', 'index')->name('pendaftarans.index');
     Route::get('/pendaftarans/create', 'create')->name('pendaftarans.create');
-
     Route::post('/pendaftarans', 'store')->name('pendaftarans.store');
+
+});
+
+Route::controller(DaftarController::class)->group(function () {
+    Route::get('/daftars', 'index')->name('daftars.index');
+    Route::get('/daftars/create', 'create')->name('daftars.create');
+    Route::post('/daftars', 'store')->name('daftars.store');
 
 });
 

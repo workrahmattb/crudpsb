@@ -9,8 +9,16 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@1.5.4/dist/flowbite.min.css" rel="stylesheet">
     @vite(['resources/css/app.css','resources/js/app.js'])
     <style>
-        .step { display: none; }
-        .step.active { display: block; }
+        .slide {
+                display: none;
+            }
+        .slide.active {
+                display: block;
+            }
+        .error-message {
+                color: red;
+                font-size: 12px;
+            }
     </style>
 </head>
   <body class="bg-gray-100 text-gray-800">
@@ -84,13 +92,21 @@
                     @csrf
 
                     <!-- Data Anak -->
-                <div class="step active">
+                <div class="slide" id="slide1">
 
                     <div class="mb-4">
                         <label for="nisn" class="block text-lg font-medium text-gray-700">NISN</label>
                         <small class="text-sm text-gray-500 italic mt-1">Nomor Induk Siswa Nasional</small>
-                        <input value="{{ old('nisn') }}" type="number" id="nisn" name="nisn"
+                        <input
+                            value="{{ old('nisn') }}"
+                            type="number"
+                            id="nisn"
+                            name="nisn"
+                            maxlength="10"
+                            pattern="\d{10}"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 10);"
                             class="form-control w-full p-3 rounded-lg border @error('nisn') border-red-500  @enderror">
+                            <span id="nisnError" class="error-message"></span>
                         @error('nisn')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -101,7 +117,7 @@
                         <small class="text-sm text-gray-500 italic mt-1">Nama Lengkap Sesuai Ijazah</small>
                         <input value="{{ old('nama') }}" type="text" id="nama" name="nama"
                             class="form-control w-full p-3 rounded-lg border @error('nama') border-red-500  @enderror">
-                            <span class="error" id="namaError"></span>
+                        <span id="namaError" class="error-message"></span>
                         @error('nama')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -111,6 +127,7 @@
                         <label for="tempat_lahir" class="block text-lg font-medium text-gray-700">Tempat Lahir</label>
                         <input value="{{ old('tempat_lahir') }}" type="text" id="tempat_lahir" name="tempat_lahir"
                             class="form-control w-full p-3 rounded-lg border @error('tempat_lahir') border-red-500  @enderror">
+                            <span id="tempat_lahirError" class="error-message"></span>
                         @error('tempat_lahir')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -120,19 +137,24 @@
                         <label for="tanggal_lahir" class="block text-lg font-medium text-gray-700">Tanggal Lahir</label>
                         <input value="{{ old('tanggal_lahir') }}" type="date" id="tanggal_lahir" name="tanggal_lahir"
                             class="form-control w-full p-3 rounded-lg border @error('tanggal_lahir') border-red-500  @enderror">
+                            <span id="tanggal_lahirError" class="error-message"></span>
                         @error('tanggal_lahir')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
+                    <div>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            type="button"
+                            onclick="nextSlide(1)">Selanjutnya</button>
+                    </div>
                 </div>
 
                 <!-- end Data Anak -->
 
 
                 <!-- start step 2 -->
-                <div class="step">
+                <div class="slide" id="slide2" style="display: none;">
                     <div class="mb-4">
                         <label for="nik" class="block text-lg font-medium text-gray-700">Nomor NIK</label>
                         <small class="text-sm text-gray-500 italic mt-1">Nomor Induk Kependudukan Anak</small>
@@ -145,6 +167,7 @@
                             pattern="\d{16}"
                             oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('nik') border-red-500  @enderror">
+                        <span id="nikError" class="error-message"></span>
                         @error('nik')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -162,6 +185,7 @@
                             pattern="\d{16}"
                             oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('kk') border-red-500  @enderror">
+                        <span id="kkError" class="error-message"></span>
                         @error('kk')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -172,6 +196,7 @@
 
                         <input value="{{ old('nama_kk') }}" type="text" id="nama_kk" name="nama_kk"
                             class="form-control w-full p-3 rounded-lg border @error('nama_kk') border-red-500  @enderror">
+                        <span id="nama_kkError" class="error-message"></span>
                         @error('nama_kk')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -190,6 +215,7 @@
                                 name="anak_ke"
 
                                 class="form-control w-full p-3 rounded-lg border @error('anak_ke') border-red-500 @enderror">
+                            <span id="anak_keError" class="error-message"></span>
                             @error('anak_ke')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
                             @enderror
@@ -205,6 +231,7 @@
                                 name="jumlah_saudara"
 
                                 class="form-control w-full p-3 rounded-lg border @error('jumlah_saudara') border-red-500 @enderror">
+                            <span id="jumlah_saudaraError" class="error-message"></span>
                             @error('jumlah_saudara')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
                             @enderror
@@ -259,14 +286,18 @@
 
 
 
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            type="button"
+                            onclick="prevSlide(1)">Sebelumnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            type="button"
+                            onclick="nextSlide(2)">Selanjutnya</button>
                 </div>
                     <!-- end step 2 -->
 
 
                     <!-- Data Sekolah -->
-                <div class="step">
+                <div class="slide" id="slide3" style="display: none;">
 
                     <div class="px-6 py-3">
                         <a class="block text-center items-center space-x-3 rtl:space-x-reverse bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Data Sekolah Sebelumnya</a>
@@ -288,7 +319,7 @@
                         </select>
 
 
-                        <span class="error" id="jenjang_pendidikan_sebelumnyaError"></span>
+                        <span id="jenjang_pendidikan_sebelumnyaError" class="error-message"></span>
                         @error('jenjang_pendidikan_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -308,6 +339,7 @@
                             <option value="Negeri" {{ old('status_sekolah_sebelumnya') == 'Negeri' ? 'selected' : '' }}>Negeri</option>
                             <option value="Swasta" {{ old('status_sekolah_sebelumnya') == 'Swasta' ? 'selected' : '' }}>Swasta</option>
                         </select>
+                        <span id="status_sekolah_sebelumnyaError" class="error-message"></span>
                         @error('status_sekolah_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -323,6 +355,7 @@
                             name="nama_sekolah_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('nama_sekolah_sebelumnya') border-red-500 @enderror">
+                        <span id="nama_sekolah_sebelumnyaError" class="error-message"></span>
                         @error('nama_sekolah_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -338,6 +371,7 @@
                             name="npsn_sekolah_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('npsn_sekolah_sebelumnya') border-red-500 @enderror">
+                        <span id="npsn_sekolah_sebelumnyaError" class="error-message"></span>
                         @error('npsn_sekolah_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -353,6 +387,7 @@
                             name="alamat_sekolah_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('alamat_sekolah_sebelumnya') border-red-500 @enderror">
+                        <span id="alamat_sekolah_sebelumnyaError" class="error-message"></span>
                         @error('alamat_sekolah_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -368,6 +403,7 @@
                             name="kecamatan_sekolah_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('kecamatan_sekolah_sebelumnya') border-red-500 @enderror">
+                        <span id="kecamatan_sekolah_sebelumnyaError" class="error-message"></span>
                         @error('kecamatan_sekolah_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -383,6 +419,7 @@
                             name="kabupaten_sekolah_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('kabupaten_sekolah_sebelumnya') border-red-500 @enderror">
+                        <span id="kabupaten_sekolah_sebelumnyaError" class="error-message"></span>
                         @error('kabupaten_sekolah_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -398,6 +435,7 @@
                             name="provinsi_sekolah_sebelumnya"
 
                             class="form-control w-full p-3 rounded-lg border @error('provinsi_sekolah_sebelumnya') border-red-500 @enderror">
+                        <span id="provinsi_sekolah_sebelumnyaError" class="error-message"></span>
                         @error('provinsi_sekolah_sebelumnya')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -405,13 +443,17 @@
 
 
 
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            type="button"
+                            onclick="prevSlide(2)">Sebelumnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            type="button"
+                            onclick="nextSlide(3)">Selanjutnya</button>
                 </div>
 
 
 
-                <div class="step">
+                <div class="slide" id="slide4" style="display: none;">
                     <div class="px-6 py-3">
                         <a class="block text-center items-center space-x-3 rtl:space-x-reverse bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Data Ayah</a>
                     </div>
@@ -426,7 +468,7 @@
                             pattern="\d{16}"
                             oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('nik_ayah') border-red-500 @enderror">
-                        <span class="error" id="nikAyahError"></span>
+                            <span id="nik_ayahError" class="error-message"></span>
                         @error('nik_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -436,7 +478,7 @@
                         <label for="nama_ayah" class="block text-lg font-medium text-gray-700">Nama Ayah</label>
                         <input value="{{ old('nama_ayah') }}" type="text" id="nama_ayah" name="nama_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('nama_ayah') border-red-500 @enderror">
-                        <span class="error" id="namaAyahError"></span>
+                        <span id="nama_ayahError" class="error-message"></span>
                         @error('nama_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -446,7 +488,7 @@
                         <label for="tempat_lahir_ayah" class="block text-lg font-medium text-gray-700">Tempat Lahir Ayah</label>
                         <input value="{{ old('tempat_lahir_ayah') }}" type="text" id="tempat_lahir_ayah" name="tempat_lahir_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('tempat_lahir_ayah') border-red-500 @enderror">
-                        <span class="error" id="tempatLahirAyahError"></span>
+                        <span id="tempat_lahir_ayahError" class="error-message"></span>
                         @error('tempat_lahir_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -456,7 +498,7 @@
                         <label for="tanggal_lahir_ayah" class="block text-lg font-medium text-gray-700">Tanggal Lahir Ayah</label>
                         <input value="{{ old('tanggal_lahir_ayah') }}" type="date" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('tanggal_lahir_ayah') border-red-500 @enderror">
-                        <span class="error" id="tanggalLahirAyahError"></span>
+                        <span id="tanggal_lahir_ayahError" class="error-message"></span>
                         @error('tanggal_lahir_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -475,7 +517,7 @@
                             <option value="meninggal" {{ old('status_ayah') == 'meninggal' ? 'selected' : '' }}>Meninggal</option>
                             <option value="tanpa keterangan" {{ old('status_ayah') == 'tanpa keterangan' ? 'selected' : '' }}>Tanpa Keterangan</option>
                         </select>
-                        <span class="error" id="statusAyahError"></span>
+                        <span id="status_ayahError" class="error-message"></span>
                         @error('status_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -485,7 +527,7 @@
                         <label for="no_hp_ayah" class="block text-lg font-medium text-gray-700">No. HP Ayah</label>
                         <input value="{{ old('no_hp_ayah') }}" type="number" id="no_hp_ayah" name="no_hp_ayah"
                             class="form-control w-full p-3 rounded-lg border @error('no_hp_ayah') border-red-500 @enderror">
-                        <span class="error" id="noHpAyahError"></span>
+                        <span id="no_hp_ayahError" class="error-message"></span>
                         @error('no_hp_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -510,7 +552,7 @@
                             <option value="S2" {{ old('pendidikan_ayah') == 'S2' ? 'selected' : '' }}>Magister (S2)</option>
                             <option value="S3" {{ old('pendidikan_ayah') == 'S3' ? 'selected' : '' }}>Doktoral (S3)</option>
                         </select>
-                        <span class="error" id="pendidikanAyahError"></span>
+                        <span id="pendidikan_ayahError" class="error-message"></span>
                         @error('pendidikan_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -543,7 +585,7 @@
                             <option value="Pensiunan" {{ old('pekerjaan_ayah') == 'Pensiunan' ? 'selected' : '' }}>Pensiunan</option>
                             <option value="Lainnya" {{ old('pekerjaan_ayah') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
-                        <span class="error" id="pekerjaanAyahError"></span>
+                        <span id="pekerjaan_ayahError" class="error-message"></span>
                         @error('pekerjaan_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -568,7 +610,7 @@
                         <option value="Tidak Tahu" {{ old('penghasilan_ayah') == 'Tidak Tahu' ? 'selected' : '' }}>Tidak Tahu</option>
                         </select>
 
-                        <span class="error" id="penghasilanAyahError"></span>
+                        <span id="penghasilan_ayahError" class="error-message"></span>
                         @error('penghasilan_ayah')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -589,7 +631,7 @@
                             pattern="\d{16}"
                             oninput="this.value = this.value.replace(/\D/g, '').slice(0, 16);"
                             class="form-control w-full p-3 rounded-lg border @error('nik_ibu') border-red-500 @enderror">
-                        <span class="error" id="nikIbuError"></span>
+                        <span id="nik_ibuError" class="error-message"></span>
                         @error('nik_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -599,7 +641,7 @@
                         <label for="nama_ibu" class="block text-lg font-medium text-gray-700">Nama Ibu</label>
                         <input value="{{ old('nama_ibu') }}" type="text" id="nama_ibu" name="nama_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('nama_ibu') border-red-500 @enderror">
-                        <span class="error" id="namaIbuError"></span>
+                        <span id="nama_ibuError" class="error-message"></span>
                         @error('nama_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -609,7 +651,7 @@
                         <label for="tempat_lahir_ibu" class="block text-lg font-medium text-gray-700">Tempat Lahir Ibu</label>
                         <input value="{{ old('tempat_lahir_ibu') }}" type="text" id="tempat_lahir_ibu" name="tempat_lahir_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('tempat_lahir_ibu') border-red-500 @enderror">
-                        <span class="error" id="tempatLahirIbuError"></span>
+                        <span id="tempat_lahir_ibuError" class="error-message"></span>
                         @error('tempat_lahir_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -619,7 +661,7 @@
                         <label for="tanggal_lahir_ibu" class="block text-lg font-medium text-gray-700">Tanggal Lahir Ibu</label>
                         <input value="{{ old('tanggal_lahir_ibu') }}" type="date" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('tanggal_lahir_ibu') border-red-500 @enderror">
-                        <span class="error" id="tanggalLahirIbuError"></span>
+                        <span id="tanggal_lahir_ibuError" class="error-message"></span>
                         @error('tanggal_lahir_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -638,7 +680,7 @@
                             <option value="tanpa keterangan" {{ old('status_ibu') == 'tanpa keterangan' ? 'selected' : '' }}>Tanpa Keterangan</option>
                         </select>
 
-                        <span class="error" id="statusIbuError"></span>
+                        <span id="status_ibuError" class="error-message"></span>
                         @error('status_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -648,7 +690,7 @@
                         <label for="no_hp_ibu" class="block text-lg font-medium text-gray-700">No. HP Ibu</label>
                         <input value="{{ old('no_hp_ibu') }}" type="number" id="no_hp_ibu" name="no_hp_ibu"
                             class="form-control w-full p-3 rounded-lg border @error('no_hp_ibu') border-red-500 @enderror">
-                        <span class="error" id="noHpIbuError"></span>
+                        <span id="no_hp_ibuError" class="error-message"></span>
                         @error('no_hp_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -672,7 +714,7 @@
                             <option value="S2" {{ old('pendidikan_ibu') == 'S2' ? 'selected' : '' }}>Magister (S2)</option>
                             <option value="S3" {{ old('pendidikan_ibu') == 'S3' ? 'selected' : '' }}>Doktoral (S3)</option>
                         </select>
-                        <span class="error" id="pendidikanIbuError"></span>
+                        <span id="pendidikan_ibuError" class="error-message"></span>
                         @error('pendidikan_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -705,7 +747,7 @@
                             <option value="Pensiunan" {{ old('pekerjaan_ibu') == 'Pensiunan' ? 'selected' : '' }}>Pensiunan</option>
                             <option value="Lainnya" {{ old('pekerjaan_ibu') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
-                        <span class="error" id="pekerjaanIbuError"></span>
+                        <span id="pekerjaan_ibuError" class="error-message"></span>
                         @error('pekerjaan_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -729,18 +771,22 @@
                             <option value="50 juta lebih" {{ old('penghasilan_ibu') == '50 juta lebih' ? 'selected' : '' }}>50 Juta Lebih</option>
                             <option value="Tidak Tahu" {{ old('penghasilan_ibu') == 'Tidak Tahu' ? 'selected' : '' }}>Tidak Tahu</option>
                         </select>
-                        <span class="error" id="penghasilanIbuError"></span>
+                        <span id="penghasilan_ibuError" class="error-message"></span>
                         @error('penghasilan_ibu')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
 
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
-                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="nextStep()">Selanjutnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            type="button"
+                            onclick="prevSlide(3)">Sebelumnya</button>
+                    <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            type="button"
+                            onclick="nextSlide(4)">Selanjutnya</button>
                 </div>
 
-                <div class="step">
+                <div class="slide" id="slide4" style="display: none;">
 
                     <div class="px-6 py-3">
                         <a class="block text-center items-center space-x-3 rtl:space-x-reverse bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-white-100 hover:text-black">Tempat Tinggal</a>
@@ -854,7 +900,9 @@
 
 
                     <div class="mb-4">
-                        <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" onclick="prevStep()">Sebelumnya</button>
+                        <button class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                type="button"
+                                onclick="prevSlide(3)">Sebelumnya</button>
 
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-500">
                             Kirim
@@ -866,7 +914,11 @@
 
                 </form>
 
-                <script>
+
+
+                {{-- javascript yang lama --}}
+
+                {{-- <script>
                     let currentStep = 0;
                     const steps = document.querySelectorAll('.step');
 
@@ -906,7 +958,9 @@
 
                         return isValid;
                     }
-                </script>
+                </script> --}}
+
+                {{-- end javascript yang lama --}}
 
             </div>
         </div>
@@ -916,6 +970,333 @@
         <div class="container mx-auto text-center">
           <p>Ponpes Syafa'aturrasul Kuantan Singingi 2025</p>
         </div>
-      </footer></body>
+      </footer>
+
+    </body>
+
+    <script>
+        let currentSlide = 1;
+
+                function showSlide(slideIndex) {
+                    const slides = document.querySelectorAll('.slide');
+                    slides.forEach((slide, index) => {
+                        slide.style.display = index + 1 === slideIndex ? 'block' : 'none';
+                    });
+                }
+
+                function validateSlide(slideIndex) {
+                    let isValid = true;
+
+                    // Reset error messages
+                    document.getElementById('namaError').innerText = '';
+                    document.getElementById('nisnError').innerText = '';
+                    document.getElementById('tempat_lahirError').innerText = '';
+                    document.getElementById('tanggal_lahirError').innerText = '';
+
+                    document.getElementById('nikError').innerText = '';
+                    document.getElementById('kkError').innerText = '';
+                    document.getElementById('nama_kkError').innerText = '';
+                    document.getElementById('anak_keError').innerText = '';
+                    document.getElementById('jumlah_saudaraError').innerText = '';
+
+                    document.getElementById('jenjang_pendidikan_sebelumnyaError').innerText = '';
+                    document.getElementById('status_sekolah_sebelumnyaError').innerText = '';
+                    document.getElementById('nama_sekolah_sebelumnyaError').innerText = '';
+                    document.getElementById('npsn_sekolah_sebelumnyaError').innerText = '';
+                    document.getElementById('alamat_sekolah_sebelumnyaError').innerText = '';
+                    document.getElementById('kecamatan_sekolah_sebelumnyaError').innerText = '';
+                    document.getElementById('kabupaten_sekolah_sebelumnyaError').innerText = '';
+                    document.getElementById('provinsi_sekolah_sebelumnyaError').innerText = '';
+
+                    document.getElementById('nik_ayahError').innerText = '';
+                    document.getElementById('nama_ayahError').innerText = '';
+                    document.getElementById('tempat_lahir_ayahError').innerText = '';
+                    document.getElementById('tanggal_lahir_ayahError').innerText = '';
+                    document.getElementById('status_ayahError').innerText = '';
+                    document.getElementById('no_hp_ayahError').innerText = '';
+                    document.getElementById('pendidikan_ayahError').innerText = '';
+                    document.getElementById('pekerjaan_ayahError').innerText = '';
+                    document.getElementById('penghasilan_ayahError').innerText = '';
+                    document.getElementById('nik_ibuError').innerText = '';
+                    document.getElementById('nama_ibuError').innerText = '';
+                    document.getElementById('tempat_lahir_ibuError').innerText = '';
+                    document.getElementById('tanggal_lahir_ibuError').innerText = '';
+                    document.getElementById('status_ibuError').innerText = '';
+                    document.getElementById('no_hp_ibuError').innerText = '';
+                    document.getElementById('pendidikan_ibuError').innerText = '';
+                    document.getElementById('pekerjaan_ibuError').innerText = '';
+                    document.getElementById('penghasilan_ibuError').innerText = '';
+
+
+
+                    // email & gambar
+                    // document.getElementById('emailError').innerText = '';
+                    // document.getElementById('imageError').innerText = '';
+
+                    if (slideIndex === 1) {
+                        const nisn = document.getElementById('nisn').value.trim();
+                        if (!nisn) {
+                            document.getElementById('nisnError').innerText = 'NISN harus diisi.';
+                            isValid = false;
+                        }
+
+                        const nama = document.getElementById('nama').value.trim();
+                        if (!nama) {
+                            document.getElementById('namaError').innerText = 'Nama harus diisi.';
+                            isValid = false;
+                        }
+
+                        const tempat_lahir = document.getElementById('tempat_lahir').value.trim();
+                        if (!tempat_lahir) {
+                            document.getElementById('tempat_lahirError').innerText = 'Tempat lahir harus diisi.';
+                            isValid = false;
+                        }
+
+                        const tanggal_lahir = document.getElementById('tanggal_lahir').value.trim();
+                        if (!tanggal_lahir) {
+                            document.getElementById('tanggal_lahirError').innerText = 'Tanggal lahir harus diisi.';
+                            isValid = false;
+                        }
+
+                    } else if (slideIndex === 2) {
+                        const nik = document.getElementById('nik').value.trim();
+                        if (!nik) {
+                            document.getElementById('nikError').innerText = 'NIK harus diisi.';
+                            isValid = false;
+                        }
+
+                        const kk = document.getElementById('kk').value.trim();
+                        if (!kk) {
+                            document.getElementById('kkError').innerText = 'Nomor KK harus diisi.';
+                            isValid = false;
+                        }
+
+                        const nama_kk = document.getElementById('nama_kk').value.trim();
+                        if (!nama_kk) {
+                            document.getElementById('nama_kkError').innerText = 'Nama KK harus diisi.';
+                            isValid = false;
+                        }
+
+                        const anak_ke = document.getElementById('anak_ke').value.trim();
+                        if (!anak_ke) {
+                            document.getElementById('anak_keError').innerText = 'Anak ke harus diisi.';
+                            isValid = false;
+                        }
+
+                        const jumlah_saudara = document.getElementById('jumlah_saudara').value.trim();
+                        if (!jumlah_saudara) {
+                            document.getElementById('jumlah_saudaraError').innerText = 'Jumlah saudara harus diisi.';
+                            isValid = false;
+                        }
+
+                        // ini format untuk email
+                        // const email = document.getElementById('email').value.trim();
+                        // if (!email) {
+                        //     document.getElementById('emailError').innerText = 'Email harus diisi.';
+                        //     isValid = false;
+                        // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        //     document.getElementById('emailError').innerText = 'Format email tidak valid.';
+                        //     isValid = false;
+                        // }
+                    } else if (slideIndex === 3) {
+                        const jenjangPendidikansebelumnya = document.getElementById('jenjang_pendidikan_sebelumnya').value.trim();
+                        if (!jenjangPendidikansebelumnya) {
+                            document.getElementById('jenjang_pendidikan_sebelumnyaError').innerText = 'Jenjang pendidikan sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+
+                        const statusSekolahsebelumnya = document.getElementById('status_sekolah_sebelumnya').value.trim();
+                        if (!statusSekolahsebelumnya) {
+                            document.getElementById('status_sekolah_sebelumnyaError').innerText = 'Status sekolah sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+
+                        const namaSekolahsebelumnya = document.getElementById('nama_sekolah_sebelumnya').value.trim();
+                        if (!namaSekolahsebelumnya) {
+                            document.getElementById('nama_sekolah_sebelumnyaError').innerText = 'Nama sekolah sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+
+                        const npsnSekolahsebelumnya = document.getElementById('npsn_sekolah_sebelumnya').value.trim();
+                        if (!npsnSekolahsebelumnya) {
+                            document.getElementById('npsn_sekolah_sebelumnyaError').innerText = 'NPSN sekolah sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+
+                        const alamatSekolahsebelumnya = document.getElementById('alamat_sekolah_sebelumnya').value.trim();
+                        if (!alamatSekolahsebelumnya) {
+                            document.getElementById('alamat_sekolah_sebelumnyaError').innerText = 'Alamat sekolah sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+
+                        const kecamatanSekolahsebelumnya = document.getElementById('kecamatan_sekolah_sebelumnya').value.trim();
+                        if (!kecamatanSekolahsebelumnya) {
+                            document.getElementById('kecamatan_sekolah_sebelumnyaError').innerText = 'Kecamatan sekolah sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+
+                        const kabupatenSekolahsebelumnya = document.getElementById('kabupaten_sekolah_sebelumnya').value.trim();
+                        if (!kabupatenSekolahsebelumnya) {
+                            document.getElementById('kabupaten_sekolah_sebelumnyaError').innerText = 'Kabupaten sekolah sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+
+                        const provinsiSekolahsebelumnya = document.getElementById('provinsi_sekolah_sebelumnya').value.trim();
+                        if (!provinsiSekolahsebelumnya) {
+                            document.getElementById('provinsi_sekolah_sebelumnyaError').innerText = 'Provinsi sekolah sebelumnya harus diisi.';
+                            isValid = false;
+                        }
+                    } else if (slideIndex === 4) {
+                        const nikAyah = document.getElementById('nik_ayah').value.trim();
+                        if (!nikAyah) {
+                            document.getElementById('nik_ayahError').innerText = 'NIK Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const namaAyah = document.getElementById('nama_ayah').value.trim();
+                        if (!namaAyah) {
+                            document.getElementById('nama_ayahError').innerText = 'Nama Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const tempatLahirAyah = document.getElementById('tempat_lahir_ayah').value.trim();
+                        if (!tempatLahirAyah) {
+                            document.getElementById('tempat_lahir_ayahError').innerText = 'Tempat Lahir Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const tanggalLahirAyah = document.getElementById('tanggal_lahir_ayah').value.trim();
+                        if (!tanggalLahirAyah) {
+                            document.getElementById('tanggal_lahir_ayahError').innerText = 'Tanggal Lahir Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const statusAyah = document.getElementById('status_ayah').value.trim();
+                        if (!statusAyah) {
+                            document.getElementById('status_ayahError').innerText = 'Status Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const noHpAyah = document.getElementById('no_hp_ayah').value.trim();
+                        if (!noHpAyah) {
+                            document.getElementById('no_hp_ayahError').innerText = 'No HP Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const pendidikanAyah = document.getElementById('pendidikan_ayah').value.trim();
+                        if (!pendidikanAyah) {
+                            document.getElementById('pendidikan_ayahError').innerText = 'Pendidikan Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const pekerjaanAyah = document.getElementById('pekerjaan_ayah').value.trim();
+                        if (!pekerjaanAyah) {
+                            document.getElementById('pekerjaan_ayahError').innerText = 'Pekerjaan Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const penghasilanAyah = document.getElementById('penghasilan_ayah').value.trim();
+                        if (!penghasilanAyah) {
+                            document.getElementById('penghasilan_ayahError').innerText = 'Penghasilan Ayah harus diisi.';
+                            isValid = false;
+                        }
+
+                        const nikIbu = document.getElementById('nik_ibu').value.trim();
+                        if (!nikIbu) {
+                            document.getElementById('nik_ibuError').innerText = 'NIK Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const namaIbu = document.getElementById('nama_ibu').value.trim();
+                        if (!namaIbu) {
+                            document.getElementById('nama_ibuError').innerText = 'Nama Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const tempatLahirIbu = document.getElementById('tempat_lahir_ibu').value.trim();
+                        if (!tempatLahirIbu) {
+                            document.getElementById('tempat_lahir_ibuError').innerText = 'Tempat Lahir Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const tanggalLahirIbu = document.getElementById('tanggal_lahir_ibu').value.trim();
+                        if (!tanggalLahirIbu) {
+                            document.getElementById('tanggal_lahir_ibuError').innerText = 'Tanggal Lahir Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const statusIbu = document.getElementById('status_ibu').value.trim();
+                        if (!statusIbu) {
+                            document.getElementById('status_ibuError').innerText = 'Status Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const noHpIbu = document.getElementById('no_hp_ibu').value.trim();
+                        if (!noHpIbu) {
+                            document.getElementById('no_hp_ibuError').innerText = 'No HP Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const pendidikanIbu = document.getElementById('pendidikan_ibu').value.trim();
+                        if (!pendidikanIbu) {
+                            document.getElementById('pendidikan_ibuError').innerText = 'Pendidikan Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const pekerjaanIbu = document.getElementById('pekerjaan_ibu').value.trim();
+                        if (!pekerjaanIbu) {
+                            document.getElementById('pekerjaan_ibuError').innerText = 'Pekerjaan Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                        const penghasilanIbu = document.getElementById('penghasilan_ibu').value.trim();
+                        if (!penghasilanIbu) {
+                            document.getElementById('penghasilan_ibuError').innerText = 'Penghasilan Ibu harus diisi.';
+                            isValid = false;
+                        }
+
+                    }
+
+
+                    // ini untuk gambar
+                    // else if (slideIndex === 3) {
+                    //     const image = document.getElementById('image').files[0];
+                    //     if (!image) {
+                    //         document.getElementById('imageError').innerText = 'Gambar harus diisi.';
+                    //         isValid = false;
+                    //     } else {
+                    //         const allowedTypes = ['image/jpeg', 'image/png'];
+                    //         if (!allowedTypes.includes(image.type)) {
+                    //             document.getElementById('imageError').innerText = 'Format gambar harus JPG, JPEG, atau PNG.';
+                    //             isValid = false;
+                    //         }
+                    //         if (image.size > 2 * 1024 * 1024) {
+                    //             document.getElementById('imageError').innerText = 'Ukuran gambar maksimal 2MB.';
+                    //             isValid = false;
+                    //         }
+                    //     }
+                    // }
+
+                    return isValid;
+                }
+
+                function nextSlide(currentIndex) {
+                    if (validateSlide(currentIndex)) {
+                        currentSlide++;
+                        showSlide(currentSlide);
+                    }
+                }
+
+                function prevSlide(currentIndex) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+
+                // Tampilkan slide pertama saat halaman dimuat
+                showSlide(currentSlide);
+
+
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.5.4/dist/flowbite.bundle.min.js"></script>
 </html>
